@@ -1,24 +1,22 @@
-<div class="footer-widgets">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="widget-area">
-        <img src="content/images/logo.png" class="img-fluid" alt="Formos Movies" />
-      </div>
-      <div class="widget-area">
-        <div class="widget-title">Contact Us</div>
-        <p>
+<div class="row footer">
+  <div class="row">
+    <div class="col">
+      <img src="content/images/logo.png" class="img-fluid w-25"  alt="Formos Movies"/>
+    </div>
+    <div class="col align-self-end">
+      <div class="title ">Contact Us:
           <a href="mailto:formos.movies@movies.formos.com"><span>formos.movies@movies.formos.com</span></a>
-        </p>
-      </div>
-      <div class="widget-area">
-        <div class="widget-title">Get In Touch</div>
-        <a class="btn social-icon" (click)="onConnectLinkOpenNewTab(1)"><i class="fa fa-linkedin"></i></a>
-        <a class="btn social-icon" (click)="onConnectLinkOpenNewTab(2)"><i class="fa fa-facebook"></i></a>
-        <a class="btn social-icon" (click)="onConnectLinkOpenNewTab(3)"><i class="fa fa-twitter"></i></a>
       </div>
     </div>
   </div>
 </div>
-<div class="site-footer">
-  <span>Copyright © {{ currentYear }} Formos Movies Inc.</span>
+<div class="row site-footer d-flex">
+  <hr/>
+  <div class="col slogan">
+    <p>Formos Movies - Discover, Watch, Enjoy!</p>
+  </div>
+  <div class="col copyright">
+    <span>Copyright © {{ currentYear }} <span class="name">Formos Movies</span> Inc.</span>
+  </div>
+
 </div>
