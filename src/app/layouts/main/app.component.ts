@@ -9,11 +9,11 @@ import {MatDrawer} from "@angular/material/sidenav";
 
 export class AppComponent {
   @ViewChild('drawer') drawer!: MatDrawer;
-  iconText = 'menu';
+
   title = 'Formos Movies';
 
   toggleDrawer() {
     this.drawer.toggle();
-    this.iconText = this.iconText === 'menu' ? 'close' : 'menu';
+
   }
 }

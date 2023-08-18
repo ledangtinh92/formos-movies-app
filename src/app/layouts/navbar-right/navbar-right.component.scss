@@ -1,0 +1,34 @@
+:host {
+
+}
+
+.navbar-right{
+
+}
+
+.mat-checkbox {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+}
+
+.mat-checkbox-inner-container {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.mat-checkbox-input:checked + .mat-checkbox-inner-container {
+  border-color: #007bff;
+}
+
+.mat-checkbox-label {
+  font-size: 14px;
+  cursor: pointer;
+}

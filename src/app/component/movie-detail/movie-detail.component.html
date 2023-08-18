@@ -1,0 +1,44 @@
+<div class="container-fluid container-body">
+  <div class="row justify-content-center" *ngIf="this.moviesDetail">
+    <div class="col-4">
+      <img src="{{this.imageUrl + this.moviesDetail.poster_path}}" alt="{{this.moviesDetail.title}}">
+    </div>
+    <div class="col-4">
+      <h1> {{this.moviesDetail.title | uppercase }}</h1>
+      <span>{{this.moviesDetail.tagline | uppercase }}</span>
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <ngb-rating [(rate)]="this.moviesDetail.vote_average"></ngb-rating>
+        </div>
+        <div class="col-4">
+          <span>{{this.moviesDetail.runtime }}MIN.</span>
+        </div>
+      </div>
+      <div class="row">
+        <span>THE GENRES</span>
+      </div>
+      <div class="row" *ngIf="this.moviesDetail.genres">
+        <div class="form-check form-check-inline" *ngFor="let item of this.moviesDetail.genres">
+          <input class="form-check-input" type="radio" checked>
+          <label class="form-check-label">{{item.name}}</label>
+        </div>
+      </div>
+      <span class="row">THE SYNOPSIS</span>
+      <span class="row">{{this.moviesDetail.overview}}</span>
+      <span class="row">THE CAST</span>
+      <div class="row" *ngIf="this.moviesDetail">
+        <div class="form-check form-check-inline">
+            Diem vien
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+

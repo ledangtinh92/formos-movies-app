@@ -1,14 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {navbarRoute} from "./layouts/navbar/navbar.route";
-import {HomeComponent} from "./component/home/home.component";
+import {navbarTopRoute} from "./layouts/navbar-top/navbar-top.route";
+import {navbarRightRoute} from "./layouts/navbar-right/navbar-right.route";
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./component/home/home.module').then(m => m.HomeModule),
+    loadChildren: () => import('./component/movie-list/movie-list.module').then(m => m.MovieListModule),
   },
-  navbarRoute,
+  {
+    path: 'detail',
+    loadChildren: () => import('./component/movie-detail/movie-detail.module').then(m => m.MovieDetailModule),
+  },
+  navbarTopRoute,navbarRightRoute
 ];
 
 @NgModule({

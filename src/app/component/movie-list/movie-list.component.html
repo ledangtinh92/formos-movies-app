@@ -1,0 +1,32 @@
+<div class="container-fluid container-body">
+  <div class="row">
+    <div class="card" style="width: 18rem;" *ngFor="let item of this.moviesLst">
+      <img src="{{this.imageUrl + item.poster_path}}" class="card-img-top" alt="{{item.original_title}}">
+      <div class="card-body">
+        <p class="card-text">{{item.title | uppercase }}</p>
+        <p class="card-text">
+          <ngb-rating [(rate)]="item.vote_average"></ngb-rating>
+        </p>
+        <div class="adult-icon" *ngIf="item.adult">
+          <span>18+</span>
+        </div>
+        <div class="adult-icon" *ngIf="!item.adult">
+          <span>18-</span>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loading" class="loading-indicator">Loading...</div>
+  </div>
+  <div class="row">
+    <button class="btn btn-primary" (click)="this.loadMoreData()">
+      Load More
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+

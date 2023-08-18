@@ -1,64 +1,24 @@
 <div app-theme class="container-main">
-    <div class="container-fluid" >
-      <router-outlet name="navbar"></router-outlet>
-    </div>
-    <div class="container-fluid container-body">
-      <div class="row">
-        <div class="col">
-          <mat-drawer-container class="example-container">
-            <mat-drawer #drawer class="example-sidenav" mode="side" opened>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-              <p>Auto-resizing sidenav</p>
-            </mat-drawer>
-            <mat-drawer-content class="example-sidenav-content">
-              <div class="d-inline-flex p-2">
-                  <span class="material-icons icon-sidenav" (click)="this.toggleDrawer()">{{iconText}}</span>
-              </div>
-              <div class="row">
-                <router-outlet></router-outlet>
-              </div>
-            </mat-drawer-content>
-          </mat-drawer-container>
-        </div>
+  <div class="container-fluid container-body">
+    <div class="row">
+      <div class="col p-0">
+        <mat-drawer-container class="example-container">
+          <mat-drawer #drawer class="example-sidenav" mode="side" autosize opened>
+            <app-navbar-right></app-navbar-right>
+          </mat-drawer>
+          <mat-drawer-content class="example-sidenav-content">
+            <div class="container-fluid p-0">
+              <app-navbar-top (menuToggleDrawer)="this.toggleDrawer()" ></app-navbar-top>
+              <router-outlet></router-outlet>
+            </div>
+            <div class="container-fluid">
+              <app-footer></app-footer>
+            </div>
+          </mat-drawer-content>
+        </mat-drawer-container>
       </div>
     </div>
-    <div class="container-fluid">
-      <app-footer></app-footer>
-    </div>
+  </div>
 </div>
 
 

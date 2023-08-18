@@ -1,0 +1,21 @@
+<div class="navbar-right">
+  <div>
+    <span>DISCOVER</span>
+    <div class="row">
+      <p><span class="material-icons">favorite</span>Popular</p>
+    </div>
+    <div class="row">
+      <p><span class="material-icons">stars</span>Top Rated</p>
+    </div>
+    <div class="row">
+      <p><span class="material-icons">calendar_today</span>Upcoming</p>
+    </div>
+  </div>
+  <div>
+    <span>GERES</span>
+    <div class="row" *ngFor="let item of this.genres">
+      <mat-checkbox (change)="onCheckboxChange()" class="custom-checkbox" [(ngModel)]="item.checked" value="{{item.id}}">{{item.name}}</mat-checkbox>
+    </div>
+  </div>
+</div>
+

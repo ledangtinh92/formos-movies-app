@@ -1,6 +1,3 @@
-/* ==========================================================================
-Navbar
-========================================================================== */
 :host {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
@@ -68,5 +65,13 @@ Navbar
 
 .icon-size{
   font-size: 15px !important;
+}
+
+.icon-sidenav{
+  transition: 0.3s;
+}
+
+.icon-sidenav:hover{
+  cursor: pointer;
 }
 
