@@ -20,17 +20,19 @@ import {environment} from "./environment/environment";
 import {httpInterceptorProviders} from "./core/interceptor";
 import {HttpClientModule} from "@angular/common/http";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {ScrollTrackerDirective} from "./shared/directive/scroll-tracker.directive";
+import { HomeComponent } from './component/home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, NavbarTopComponent,NavbarRightComponent
+    AppComponent, FooterComponent, NavbarTopComponent, NavbarRightComponent, ScrollTrackerDirective, HomeComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSidenavModule,MatButtonModule,MatCheckboxModule,
+    MatSidenavModule, MatButtonModule, MatCheckboxModule,
     SharedLibsModule,
     ThemeModule.forRoot({
       themes: [lightTheme, darkTheme],

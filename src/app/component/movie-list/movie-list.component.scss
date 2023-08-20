@@ -5,8 +5,16 @@
   flex-direction: column;
 }
 .container-body{
+}
+
+.theme{
   background: var(--background) ;
   color: var(--on-background);
+}
+
+.item-movie{
+  width: 19rem;
+  cursor: pointer;
 }
 
 .adult-icon {
@@ -17,4 +25,30 @@
   color: white;
   padding: 5px;
   border-radius: 50%;
+}
+
+.card-text{
+  font-weight:700;
+}
+
+i {
+  font-size: 1rem;
+  padding-right: 0.1rem;
+  color: #b0c4de;
+}
+.filled {
+  color: #ffc107;
+}
+
+.category-title{
+  & span{
+    font-size: x-large;
+    font-weight: 500;
+  }
+  & p{
+    margin-top: 5px;
+    font-size: large;
+    font-weight: bold;
+    color: rgba(101,102,98,0.77);
+  }
 }

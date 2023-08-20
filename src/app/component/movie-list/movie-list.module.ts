@@ -4,7 +4,6 @@ import {homeState} from "./movie-list.route";
 import {SharedLibsModule} from "../../shared/shared-libs.module";
 import {MovieListComponent} from "./movie-list.component";
 import {NgbRating} from "@ng-bootstrap/ng-bootstrap";
-import {ScrollTrackerDirective} from "../../shared/directive/scroll-tracker.directive";
 import {
   CdkVirtualForOf,
   CdkVirtualScrollViewport
@@ -12,6 +11,6 @@ import {
 
 @NgModule({
   imports: [SharedLibsModule, RouterModule.forChild(homeState), NgbRating, CdkVirtualScrollViewport, CdkVirtualForOf],
-  declarations: [MovieListComponent,ScrollTrackerDirective],
+  declarations: [MovieListComponent],
 })
 export class MovieListModule {}

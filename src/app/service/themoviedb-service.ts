@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {map, Observable, Subject} from 'rxjs';
 import {ApplicationConfigService} from "../config/application-config.service";
 import {IGenres} from "../model/genre.model";
-import {IPage} from "../model/page-model";
+import {IPage} from "../model/page.model";
 import {IMovieDetail} from "../model/movies.model";
+import {SearchModel} from "../model/search.model";
+import {DiscoverType} from "../enums/discover.type.model";
+import {DateService} from "../core/util/date-util.service";
+import {ICast} from "../model/cast.model";
+import {IPersonModel} from "../model/person.model";
 
 @Injectable({ providedIn: 'root' })
 export class ThemoviedbService {
+  private genresSelect = new Subject<IGenres[]>();
   private resourceUrl = this.applicationConfigService.getEndpointApi('');
 
-  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService,private dateService: DateService) {}
 
   getAllGenresOfMovie():Observable<IGenres[]> {
     return this.http.get<{ genres: IGenres[] }>(`${this.resourceUrl}/genre/movie/list`, { observe: 'response' }).pipe(
@@ -18,18 +24,27 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieList(ipageInfo: IPage):Observable<IPage>{
-    let page = 1;
-    if(ipageInfo){
-      page = ipageInfo.page + 1;
+  getMovieList(iSearchModel: SearchModel): Observable<IPage> {
+    let options: HttpParams = new HttpParams();
+    options = options.set('include_adult', false);
+    options = options.set('include_video', false);
+    options = options.set('language', 'en-US');
+    options = options.set('page', iSearchModel.getNextPage());
+    if(DiscoverType.UPCOMING == iSearchModel.type){
+      options = options.set('sort_by', 'popularity.desc');
+      options = options.set('with_release_type', '2|3');
+      options = options.set('release_date.gte', this.dateService.getCurrentDateFormatted());
+    } else if(DiscoverType.TOP_RATED == iSearchModel.type){
+      options = options.set('sort_by', 'vote_average.desc');
+      options = options.set('without_genres', '99,10755');
+      options = options.set('vote_count.gte', '200');
+    } else if(DiscoverType.POPULAR == iSearchModel.type){
+      options = options.set('sort_by', 'popularity.desc');
+    } else{
+      throw new Error('Discover type error.');
     }
 
-    let options: HttpParams = new HttpParams();
-    options.set('language', 'en-US');
-    options.set('include_adult', true);
-    options.set('page', page);
-
-    return this.http.get<IPage>(`${this.resourceUrl}/movie/popular?page=${page}&include_adult=false`, {  params: options,observe: 'response' }).pipe(
+    return this.http.get<IPage>(`${this.resourceUrl}/discover/movie/`, {params: options, observe: 'response'}).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body;
@@ -58,8 +73,7 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieDetail():Observable<IMovieDetail> {
-    const movie_id = 615656;
+  getMovieDetail(movie_id : string):Observable<IMovieDetail> {
     return this.http.get<IMovieDetail>(`${this.resourceUrl}/movie/${movie_id}`, {observe: 'response' }).pipe(
       map(response => {
         if (response.body !== null) {
@@ -71,7 +85,55 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieCredits(){
-
+  getMovieCredits(movie_id : string):Observable<ICast[]>{
+    return this.http.get<{cast: ICast[]}>(`${this.resourceUrl}/movie/${movie_id}/credits`, {observe: 'response' }).pipe(
+      map(response => {
+        if (response.body !== null) {
+          return response.body.cast;
+        } else {
+          throw new Error('Response body is null.');
+        }
+      })
+    );
   }
+
+  getMovieRecommendation(movie_id :string, page: number):Observable<IPage>{
+    let options: HttpParams = new HttpParams();
+    options.append('language', 'en-US');
+    options.append('page', page);
+
+    return this.http.get<IPage>(`${this.resourceUrl}/movie/${movie_id}/recommendations`, { params: options, observe: 'response' }).pipe(
+      map(response => {
+        if (response.body !== null) {
+          return response.body;
+        } else {
+          throw new Error('Response body is null.');
+        }
+      })
+    );
+  }
+
+  getActorInfo(person_id: string):Observable<IPersonModel> {
+    let options: HttpParams = new HttpParams();
+    options.append('language', 'en-US');
+    return this.http.get<IPersonModel>(`${this.resourceUrl}/person/${person_id}`, { params: options, observe: 'response' }).pipe(
+      map(response => {
+        if (response.body !== null) {
+          return response.body;
+        } else {
+          throw new Error('Response body is null.');
+        }
+      })
+    );
+  }
+
+  sendData(data: any) {
+    this.genresSelect.next(data);
+  }
+
+  getData() {
+    return this.genresSelect.asObservable();
+  }
+
+
 }

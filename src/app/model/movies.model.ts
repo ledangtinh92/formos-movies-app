@@ -1,3 +1,5 @@
+import {IGenres} from "./genre.model";
+
 export interface IMovie {
   adult: boolean;
   backdrop_path?: string | null;
@@ -20,7 +22,7 @@ export interface IMovieDetail {
   backdrop_path?: string | null;
   belongs_to_collection: Object[] | null;
   budget: number | null;
-  genres: Object[] | null ;
+  genres: IGenres[] | null ;
   homepage: string | null;
   id: number | null;
   imdb_id: string | null;

@@ -1,17 +1,29 @@
-<div class="container-fluid container-body">
+<div class="container-fluid container-body theme">
+  <div class="row category-title mt-4 mb-1">
+    <span>{{this.searchModel.type | uppercase}}</span>
+    <p>CATEGORY</p>
+  </div>
+
   <div class="row">
-    <div class="card" style="width: 18rem;" *ngFor="let item of this.moviesLst">
-      <img src="{{this.imageUrl + item.poster_path}}" class="card-img-top" alt="{{item.original_title}}">
-      <div class="card-body">
-        <p class="card-text">{{item.title | uppercase }}</p>
+    {{this.searchModel| json}}
+  </div>
+
+  <div class="row justify-content-md-center">
+    <div class="card p-0 item-movie" *ngFor="let item of this.moviesLst">
+      <img [routerLink]="['/movie',item.id,'detail']" src="{{this.imageUrl + item.poster_path}}" class="card-img-top"
+           alt="{{item.original_title}}">
+      <div class="card-body text-center">
+        <p class="card-text" [routerLink]="['/movie',item.id,'detail']"
+           style="color: #555555">{{item.title | uppercase }}</p>
         <p class="card-text">
-          <ngb-rating [(rate)]="item.vote_average"></ngb-rating>
+          <ngb-rating [(rate)]="item.vote_average">
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
+            </ng-template>
+          </ngb-rating>
         </p>
         <div class="adult-icon" *ngIf="item.adult">
           <span>18+</span>
-        </div>
-        <div class="adult-icon" *ngIf="!item.adult">
-          <span>18-</span>
         </div>
       </div>
     </div>

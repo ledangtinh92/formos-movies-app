@@ -1,38 +1,94 @@
 <div class="container-fluid container-body">
   <div class="row justify-content-center" *ngIf="this.moviesDetail">
-    <div class="col-4">
-      <img src="{{this.imageUrl + this.moviesDetail.poster_path}}" alt="{{this.moviesDetail.title}}">
+    <div class="col-3">
+      <img class="float-end" src="{{this.imageUrl + this.moviesDetail.poster_path}}" alt="{{this.moviesDetail.title}}">
     </div>
     <div class="col-4">
-      <h1> {{this.moviesDetail.title | uppercase }}</h1>
-      <span>{{this.moviesDetail.tagline | uppercase }}</span>
+      <div class="row movie-detail-title">
+        <span> {{this.moviesDetail.title | uppercase }}</span>
+        <p>{{this.moviesDetail.tagline | uppercase }}</p>
+      </div>
       <div class="row justify-content-between">
         <div class="col-4">
-          <ngb-rating [(rate)]="this.moviesDetail.vote_average"></ngb-rating>
+          <ngb-rating [(rate)]="moviesDetail.vote_average">
+            <ng-template let-fill="fill" let-index="index">
+              <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
+            </ng-template>
+          </ngb-rating>
+          <span>{{this.moviesDetail.vote_average | roundNumber }}</span>
+          <span></span>
         </div>
         <div class="col-4">
+          <span>{{this.moviesDetail.original_language | uppercase }}</span>/
           <span>{{this.moviesDetail.runtime }}MIN.</span>
+          <span *ngIf="this.moviesDetail.release_date">/{{this.moviesDetail.release_date.substring(0, 4) }}</span>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-3">
         <span>THE GENRES</span>
       </div>
       <div class="row" *ngIf="this.moviesDetail.genres">
-        <div class="form-check form-check-inline" *ngFor="let item of this.moviesDetail.genres">
-          <input class="form-check-input" type="radio" checked>
-          <label class="form-check-label">{{item.name}}</label>
+        <div class="col">
+          <div class="form-check form-check-inline custom-checkbox" *ngFor="let genreItem of this.moviesDetail.genres">
+            <input class="form-check-input" type="radio" checked>
+            <label class="form-check-label">{{genreItem.name | uppercase}}</label>
+          </div>
         </div>
       </div>
-      <span class="row">THE SYNOPSIS</span>
-      <span class="row">{{this.moviesDetail.overview}}</span>
-      <span class="row">THE CAST</span>
-      <div class="row" *ngIf="this.moviesDetail">
-        <div class="form-check form-check-inline">
-            Diem vien
+      <div class="row mt-3">
+        <span>THE SYNOPSIS</span>
+      </div>
+      <div class="row">
+        <span>{{this.moviesDetail.overview}}</span>
+      </div>
+
+      <div class="row mt-3">
+              <span>THE CAST</span>
+      </div>
+
+      <div class="row" *ngIf="this.listCast">
+        <div class="image-cast" *ngFor="let castItem of this.listCast">
+          <img [routerLink]="['/actor',castItem.cast_id,'detail']" *ngIf="castItem.profile_path"  src="{{this.profileUrl + castItem.profile_path}}">
+        </div>
+      </div>
+      <div class="row justify-content-between mt-3">
+        <div class="col-6">
+          <button class="btn btn-primary d-inline-flex align-items-center">
+            <span>Website</span>
+            <span class="material-icons">link</span>
+          </button>
+          <button class="btn btn-primary d-inline-flex align-items-center">
+            <span>IMDB</span>
+            <span class="material-icons">local_movies</span>
+          </button>
+          <button class="btn btn-primary d-inline-flex align-items-center">
+            <span>Trailer</span>
+          </button>
+        </div>
+        <div class="col-6">
+          <button class="btn btn-primary d-flex align-items-center float-end">
+            <span class="material-icons">arrow_back</span>
+            <span>Back</span>
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
+  <div class="row">
+    <h1>RECOMMENDED</h1>
+    <span>MOVIES</span>
+  </div>
+
+  <div class="row" *ngIf="this.recommendationLst">
+    <div class="card item-movie" *ngFor="let recommentItem of this.recommendationLst">
+      <div *ngIf="recommentItem.poster_path">
+        <img class="card-img-top" [routerLink]="['/movie',recommentItem.id,'detail']" src="{{this.recommentUrl + recommentItem.poster_path}}">
+        <div class="card-body">
+          <h5 class="card-title">{{recommentItem.title}}</h5>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 

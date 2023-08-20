@@ -20,6 +20,6 @@ export class ApplicationConfigService {
   }
 
   getEndpointImage(api: string): string {
-    return `${ this.endpointImage }${ api }`;
+    return `${ this.endpointImage }/${ api }`;
   }
 }

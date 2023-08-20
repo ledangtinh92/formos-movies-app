@@ -1,20 +1,34 @@
 <div class="navbar-right">
   <div>
-    <span>DISCOVER</span>
-    <div class="row">
-      <p><span class="material-icons">favorite</span>Popular</p>
+    <span class="title">DISCOVER</span>
+    <div class="row item" [routerLink]="['/movie', discoverType.POPULAR]">
+      <div class="d-flex align-items-center">
+        <span class="material-icons">favorite</span>
+        <p class="mb-0 ml-2 ps-1 ">Popular</p>
+      </div>
     </div>
-    <div class="row">
-      <p><span class="material-icons">stars</span>Top Rated</p>
+    <div class="row item" [routerLink]="['/movie', discoverType.TOP_RATED]">
+      <div class="d-flex align-items-center">
+        <span class="material-icons">stars</span>
+        <p class="mb-0 ml-2 ps-1">Top Rated</p>
+      </div>
     </div>
-    <div class="row">
-      <p><span class="material-icons">calendar_today</span>Upcoming</p>
+    <div class="row item" [routerLink]="['/movie', discoverType.UPCOMING]">
+      <div class="d-flex align-items-center">
+        <span class="material-icons">calendar_today</span>
+        <p class="mb-0 ml-2 ps-1">Upcoming</p>
+      </div>
     </div>
   </div>
   <div>
-    <span>GERES</span>
-    <div class="row" *ngFor="let item of this.genres">
-      <mat-checkbox (change)="onCheckboxChange()" class="custom-checkbox" [(ngModel)]="item.checked" value="{{item.id}}">{{item.name}}</mat-checkbox>
+    <span class="title">GENRES</span>
+    <div class="row item" *ngFor="let item of this.genres;index as i">
+      <div class="form-check custom-checkbox">
+        <input class="form-check-input" type="checkbox" value="" id="checkbox{{i}}" (change)="onCheckboxChange()" [(ngModel)]="item.checked">
+        <label class="form-check-label" for="checkbox{{i}}">
+          {{item.name}}
+        </label>
+      </div>
     </div>
   </div>
 </div>

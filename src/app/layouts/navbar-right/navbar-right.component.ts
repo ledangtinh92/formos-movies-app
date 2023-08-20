@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
-import {HttpResponse} from "@angular/common/http";
 import {IGenres} from "../../model/genre.model";
-import {map} from "rxjs";
+import {DiscoverType} from "../../enums/discover.type.model";
 
 @Component({
   selector: 'app-navbar-right',
@@ -12,6 +11,8 @@ import {map} from "rxjs";
 export class NavbarRightComponent implements OnInit {
   genres: IGenres[];
   selectedGenres: IGenres[] = [];
+  isChecked = true;
+  discoverType = DiscoverType;
 
   constructor(private themoviedbService: ThemoviedbService) {
     this.genres = [];
@@ -23,6 +24,7 @@ export class NavbarRightComponent implements OnInit {
         next: value => {
           if (value) {
             this.genres = value.map(genre => ({ ...genre, checked: false }));
+            this.themoviedbService.sendData(this.selectedGenres)
           }
         },
         error: err => {
@@ -30,11 +32,19 @@ export class NavbarRightComponent implements OnInit {
         }
       }
     )
-
-
   }
 
   onCheckboxChange(): void {
     this.selectedGenres = this.genres.filter(genre => genre.checked);
+    this.themoviedbService.sendData(this.selectedGenres);
+  }
+
+  onRadioChange($event: Event) {
+    $event.target
+    if($event.target){
+      $event.currentTarget
+    } else {
+      //$event.currentTarget.checked = true;
+    }
   }
 }

@@ -10,7 +10,7 @@ import {ThemeService} from "../../shared/themes/themes.service";
 export class NavbarTopComponent implements OnInit {
   searchQuery: string;
   isSearchExpanded: boolean = false;
-  iconText = 'keyboard_double_arrow_left';
+  iconText = 'menu';
   @Output() menuToggleDrawer = new EventEmitter<string>();
 
   constructor(
@@ -22,7 +22,7 @@ export class NavbarTopComponent implements OnInit {
 
   toggleDrawer() {
     this.menuToggleDrawer.emit();
-    this.iconText = this.iconText === 'keyboard_double_arrow_left' ? 'menu' : 'keyboard_double_arrow_left';
+    this.iconText = this.iconText === 'menu' ? 'keyboard_double_arrow_left' : 'menu';
   }
 
   toggleSearch():void {
