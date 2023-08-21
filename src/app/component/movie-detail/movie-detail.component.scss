@@ -4,9 +4,6 @@
   display: flex;
   flex-direction: column;
 }
-.container-body{
-
-}
 
 .movie-detail-title{
   & span{
@@ -20,14 +17,15 @@
   }
 }
 
-
-i {
-  font-size: 1rem;
-  padding-right: 0.1rem;
-  color: #b0c4de;
+.row span.title{
+  font-family: -webkit-body;
+  font-size:large;
+  font-weight:400;
+  margin-bottom: 5px;
 }
-.filled {
-  color: #ffc107;
+
+.synopsis{
+  color: #555555;
 }
 
 .custom-checkbox{

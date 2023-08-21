@@ -24,7 +24,7 @@ export class NavbarRightComponent implements OnInit {
         next: value => {
           if (value) {
             this.genres = value.map(genre => ({ ...genre, checked: false }));
-            this.themoviedbService.sendData(this.selectedGenres)
+            this.themoviedbService.sendGenresData(this.selectedGenres)
           }
         },
         error: err => {
@@ -36,7 +36,7 @@ export class NavbarRightComponent implements OnInit {
 
   onCheckboxChange(): void {
     this.selectedGenres = this.genres.filter(genre => genre.checked);
-    this.themoviedbService.sendData(this.selectedGenres);
+    this.themoviedbService.sendGenresData(this.selectedGenres);
   }
 
   onRadioChange($event: Event) {

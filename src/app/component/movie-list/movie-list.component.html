@@ -1,4 +1,4 @@
-<div class="container-fluid container-body theme">
+<div class="container-fluid container-body theme-main-color">
   <div class="row category-title mt-4 mb-1">
     <span>{{this.searchModel.type | uppercase}}</span>
     <p>CATEGORY</p>
@@ -9,14 +9,14 @@
   </div>
 
   <div class="row justify-content-md-center">
-    <div class="card p-0 item-movie" *ngFor="let item of this.moviesLst">
+    <div class="card p-0 item-movie theme-main-color" *ngFor="let item of this.moviesLst">
       <img [routerLink]="['/movie',item.id,'detail']" src="{{this.imageUrl + item.poster_path}}" class="card-img-top"
            alt="{{item.original_title}}">
       <div class="card-body text-center">
         <p class="card-text" [routerLink]="['/movie',item.id,'detail']"
            style="color: #555555">{{item.title | uppercase }}</p>
-        <p class="card-text">
-          <ngb-rating [(rate)]="item.vote_average">
+        <p class="card-text star">
+          <ngb-rating [rate]="item.vote_average / 2">
             <ng-template let-fill="fill" let-index="index">
               <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
             </ng-template>
@@ -29,10 +29,12 @@
     </div>
     <div *ngIf="loading" class="loading-indicator">Loading...</div>
   </div>
-  <div class="row">
-    <button class="btn btn-primary" (click)="this.loadMoreData()">
-      Load More
-    </button>
+  <div class="row justify-content-end pt-5 pb-5">
+    <div class="col-2">
+      <button class="btn btn-primary" (click)="this.loadMoreData()">
+        Get More <span class='bi bi-caret-down'></span>
+      </button>
+    </div>
   </div>
 </div>
 

@@ -5,6 +5,7 @@ import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IPersonModel} from "../../model/person.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
 import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.model";
+import {SortType} from "src/app/enums/sort.type";
 
 @Component({
   selector: 'app-actor-detail',
@@ -13,7 +14,10 @@ import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.model";
 })
 export class ActorDetailComponent implements  OnInit{
   porsonInfo!: IPersonModel;
+  personMovisLst: IMovie[] = [];
   imageUrl = '';
+  sortTypeValues = Object.keys(SortType);
+  sortTypeSelect: any;
   constructor(private activeRoute: ActivatedRoute,
               private applicationConfigService: ApplicationConfigService,
               private themoviedbService: ThemoviedbService) {
@@ -24,6 +28,10 @@ export class ActorDetailComponent implements  OnInit{
     this.activeRoute.params.subscribe(params => {
       this.themoviedbService.getActorInfo(params['id']).subscribe(value => {
           this.porsonInfo = value;
+      });
+
+      this.themoviedbService.getPersonMoviesLst(params['id']).subscribe(value => {
+        this.personMovisLst = value;
       });
     });
   }

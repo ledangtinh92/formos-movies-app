@@ -4,9 +4,12 @@ import {IMovie, IMovieDetail} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {first} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ICast} from "../../model/cast.model";
 import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.model";
+import {IVideoModel} from "src/app/model/video.model";
+import {MatDialog} from "@angular/material/dialog";
+import {YoutubeDialogComponent} from "src/app/shared/youtube-dialog/youtube-dialog.component";
 
 @Component({
   selector: 'app-movie-detail',
@@ -21,8 +24,16 @@ export class MovieDetailComponent implements OnInit {
   loading = false;
   listCast: ICast[] = [];
   recommendationLst: IMovie[] = [];
+  videoMovies!: IVideoModel;
+  slideGroups: ICast[][] = [];
 
-  constructor(private themoviedbService: ThemoviedbService,private applicationConfigService: ApplicationConfigService,private config: NgbRatingConfig,private activeRoute: ActivatedRoute) {
+
+  constructor(private themoviedbService: ThemoviedbService,
+              private applicationConfigService: ApplicationConfigService,
+              private config: NgbRatingConfig,
+              private router: Router,
+              private dialog: MatDialog,
+              private activeRoute: ActivatedRoute) {
     this.imageUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W342);
     this.recommentUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W342);
     this.profileUrl = this.applicationConfigService.getEndpointImage(ProfileSizesEnums.W45);
@@ -31,16 +42,27 @@ export class MovieDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.activeRoute.params.subscribe(params => {
       this.loadDetailMovie(params['id']);
       this.themoviedbService.getMovieCredits(params['id']).subscribe(value => {
         this.listCast = value;
+        let numberOfItemsPerSlide = 10;
+        for (let i = 0; i < this.listCast.length; i += numberOfItemsPerSlide) {
+          const slide = this.listCast.slice(i, i + numberOfItemsPerSlide)
+          this.slideGroups.push(slide);
+        }
       });
       this.themoviedbService.getMovieRecommendation(params['id'], 1).subscribe(value => {
         if(value){
           this.recommendationLst = value.results as IMovie[];
         }
       });
+      this.themoviedbService.getTrailerMovieById(params['id']).subscribe(value => {
+        if(value){
+          this.videoMovies = value;
+        }
+      })
     });
   }
 
@@ -59,5 +81,15 @@ export class MovieDetailComponent implements OnInit {
         }
       })
     }
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+  openDialog() {
+    this.dialog.open(YoutubeDialogComponent, {
+      data: { videoId: 'YOUTUBE_VIDEO_ID' },
+    });
   }
 }

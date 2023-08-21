@@ -9,6 +9,7 @@ import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 import {ActivatedRoute} from "@angular/router";
 import {SearchModel} from "../../model/search.model";
 import {IGenres} from "../../model/genre.model";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-home',
@@ -24,7 +25,10 @@ export class MovieListComponent implements OnInit {
   typeLoad = '';
   searchModel: SearchModel = new SearchModel(0, '');
 
-  constructor(private themoviedbService: ThemoviedbService, private applicationConfigService: ApplicationConfigService, private config: NgbRatingConfig,
+  constructor(private themoviedbService: ThemoviedbService,
+              private applicationConfigService: ApplicationConfigService,
+              private config: NgbRatingConfig,
+              private spinner: NgxSpinnerService,
               private activeRoute: ActivatedRoute) {
     this.moviesLst = []
     this.imageUrl = this.applicationConfigService.getEndpointImage('/w500');
@@ -38,26 +42,34 @@ export class MovieListComponent implements OnInit {
       this.moviesLst = [];
       this.loadMoreData();
     });
-    this.themoviedbService.getData().subscribe(value => {
+    this.themoviedbService.getGenresData().subscribe(value => {
       if (value) {
         this.searchModel.genres = value as IGenres[];
+      }
+    });
+    this.themoviedbService.getMoviesData().subscribe(data => {
+      if(data) {
+        this.moviesLst = data;
       }
     })
   }
 
   loadMoreData(): void {
+    this.spinner.show();
     if (!this.loading) {
       this.loading = true;
       this.themoviedbService.getMovieList(this.searchModel).pipe(
         first()
       ).subscribe({
         next: value => {
+          this.spinner.hide();
           this.pageInfo = value;
           this.searchModel.page = this.pageInfo.page;
           this.moviesLst.push(...this.pageInfo.results as IMovie[]);
           this.loading = false;
         },
         error: error => {
+          this.spinner.hide();
           this.loading = false;
         }
       })

@@ -1,5 +1,5 @@
 <div app-theme class="container-main">
-  <div class="container-fluid container-body">
+  <div class="container-fluid">
     <div class="row">
       <div class="col p-0">
         <mat-drawer-container class="example-container">
@@ -9,7 +9,7 @@
           <mat-drawer-content class="example-sidenav-content">
             <div class="container-fluid p-0">
               <app-navbar-top (menuToggleDrawer)="this.toggleDrawer()" ></app-navbar-top>
-              <router-outlet></router-outlet>
+              <router-outlet class="container-body"></router-outlet>
             </div>
             <div class="container-fluid">
               <app-footer></app-footer>
@@ -19,6 +19,13 @@
       </div>
     </div>
   </div>
+  <ngx-spinner
+          bdColor = "rgba(0, 0, 0, 0.8)"
+          size = "medium"
+          color = "#ed3370"
+          type = "square-jelly-box"
+          [fullScreen] = "true">
+    <p style="color:#ed3370 " > Loading... </p></ngx-spinner>
 </div>
 
 

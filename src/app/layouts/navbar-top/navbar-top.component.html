@@ -1,10 +1,12 @@
-<nav class="navbar navbar-expand-lg p-0 nar-component">
+
+<nav class="navbar navbar-expand-lg p-0 theme-main-color">
   <div class="d-inline-flex">
     <span class="material-icons" (click)="this.toggleDrawer()">{{iconText}}</span>
   </div>
   <a class="navbar-brand" (click)="this.toggleDrawer()">
     Formos Movies
   </a>
+  <a routerLink="/" routerLinkActive="active"><span class='material-icons'>home</span>Home</a>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -14,9 +16,8 @@
       <li class="nav-item">
       </li>
     </ul>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center pe-3">
       <div class="search-bar">
-        <a routerLink="/detail" routerLinkActive="active">Movie Detail</a>
         <input
           name="searchQuery"
           class="search-input form-control form-control-sm"
@@ -30,12 +31,12 @@
           <span class="material-icons circle">search</span>
         </button>
       </div>
-      <span class="material-icons yellow-color icon-size">light_mode</span>&nbsp;
+      <span  class="material-icons yellow-color icon-size">light_mode</span>&nbsp;
       <div class="form-check form-switch custom-switch">
         <input class="form-check-input custom-control-input" (click)="toggle()" type="checkbox"
                id="flexSwitchCheckDisabled">
       </div>
-      <span class='material-icons icon-size'>dark_mode</span>
+      <span class="bi bi-moon"></span>
       <div class="">
       </div>
     </div>

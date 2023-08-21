@@ -19,9 +19,11 @@ import {ApplicationConfigService} from "./config/application-config.service";
 import {environment} from "./environment/environment";
 import {httpInterceptorProviders} from "./core/interceptor";
 import {HttpClientModule} from "@angular/common/http";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbCarouselModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ScrollTrackerDirective} from "./shared/directive/scroll-tracker.directive";
 import { HomeComponent } from './component/home/home.component';
+import {NgxSpinnerModule} from "ngx-spinner";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -33,12 +35,14 @@ import { HomeComponent } from './component/home/home.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSidenavModule, MatButtonModule, MatCheckboxModule,
-    SharedLibsModule,
+    SharedLibsModule,NgbCarouselModule,
     ThemeModule.forRoot({
       themes: [lightTheme, darkTheme],
       active: 'light'
     }),
-    NgbModule
+    NgbModule,
+    NgxSpinnerModule,
+    MatDialogModule,
   ],
   providers: [ThemeService, httpInterceptorProviders],
   bootstrap: [AppComponent]

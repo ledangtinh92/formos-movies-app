@@ -1,39 +1,38 @@
-:host {
-
-}
-
-.navbar-right{
+.navbar-right {
   padding: 20px;
 }
 
-.navbar-right .title{
-  font-family:system-ui;
+.navbar-right .title {
+  font-family: system-ui;
   font-weight: 700;
 }
 
-.navbar-right .item{
+.navbar-right .item {
   cursor: pointer;
-  font-family:system-ui;
+  font-family: system-ui;
   font-weight: 600;
   color: var(--primary);
   margin: 10px 0px 10px 0px;
+
   & p {
     font-size: small;
   }
 }
-.border-custom{
+
+.border-custom {
   position: absolute;
   padding: 0px;
-  margin: 0px ;
+  margin: 0px;
   border: 1px solid red;
 }
+
 .custom-checkbox {
   margin-left: 15px;
+
   & input {
     font-size: larger;
     border-radius: 50%;
     border-color: var(--primary);
     background-color: var(--primary);
-
   }
 }
