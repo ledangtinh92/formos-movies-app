@@ -4,3 +4,4 @@ export enum SortType {
   ORIGINAL_TITLE = 'Original Title',
   RELEASE_DATE = 'Release Date'
 }
+

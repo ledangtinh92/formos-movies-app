@@ -1,0 +1,16 @@
+.image-slider {
+  display: flex;
+  align-items: center;
+}
+
+.images {
+  display: flex;
+  overflow-x: scroll;
+  max-width: 600px;
+}
+
+.images img {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+}

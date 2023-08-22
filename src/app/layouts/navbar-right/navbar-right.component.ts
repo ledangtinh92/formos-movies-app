@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IGenres} from "../../model/genre.model";
 import {DiscoverType} from "../../enums/discover.type.model";
+import {Router} from "@angular/router";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-navbar-right',
@@ -11,10 +13,11 @@ import {DiscoverType} from "../../enums/discover.type.model";
 export class NavbarRightComponent implements OnInit {
   genres: IGenres[];
   selectedGenres: IGenres[] = [];
-  isChecked = true;
   discoverType = DiscoverType;
 
-  constructor(private themoviedbService: ThemoviedbService) {
+  constructor(private themoviedbService: ThemoviedbService,
+              private router: Router,
+              private spinner: NgxSpinnerService,) {
     this.genres = [];
   }
 
@@ -24,7 +27,6 @@ export class NavbarRightComponent implements OnInit {
         next: value => {
           if (value) {
             this.genres = value.map(genre => ({ ...genre, checked: false }));
-            this.themoviedbService.sendGenresData(this.selectedGenres)
           }
         },
         error: err => {
@@ -35,16 +37,42 @@ export class NavbarRightComponent implements OnInit {
   }
 
   onCheckboxChange(): void {
+    this.spinner.show();
     this.selectedGenres = this.genres.filter(genre => genre.checked);
-    this.themoviedbService.sendGenresData(this.selectedGenres);
+    this.themoviedbService.searchParams.genres = this.selectedGenres;
+    this.themoviedbService.searchParams.type = '';
+    this.themoviedbService.searchParams.search ='';
+    this.themoviedbService.searchParams.page = 0;
+    this.themoviedbService.getMovieList().subscribe({
+      next: result => {
+        if (result) {
+          this.themoviedbService.sendMoviesData(result.results)
+        }
+        this.spinner.hide();
+      },
+      error:err => {
+        this.spinner.hide();
+      }
+    });
+    this.router.navigate(['/movie']);
   }
 
-  onRadioChange($event: Event) {
-    $event.target
-    if($event.target){
-      $event.currentTarget
-    } else {
-      //$event.currentTarget.checked = true;
-    }
+  routerlinkDiscover(POPULAR: DiscoverType) {
+    this.spinner.show();
+    this.themoviedbService.searchParams.type = POPULAR;
+    this.themoviedbService.searchParams.page = 0;
+    this.themoviedbService.searchParams.search ='';
+    this.themoviedbService.getMovieList().subscribe({
+      next: result => {
+        if (result) {
+          this.themoviedbService.sendMoviesData(result.results)
+        }
+        this.spinner.hide();
+      },
+      error:err => {
+        this.spinner.hide();
+      }
+    });
+    this.router.navigate(['/movie']);
   }
 }

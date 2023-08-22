@@ -1,128 +1,125 @@
-<div class="container-fluid container-body theme-main-color">
-  <div class="row justify-content-center" *ngIf="this.moviesDetail">
-    <div class="col-3">
-      <img class="float-end" src="{{this.imageUrl + this.moviesDetail.poster_path}}" alt="{{this.moviesDetail.title}}">
-    </div>
-    <div class="col-4">
-      <div class="row movie-detail-title">
-        <span> {{this.moviesDetail.title | uppercase }}</span>
-        <p>{{this.moviesDetail.tagline | uppercase }}</p>
+<div class="container-fluid  theme-main-color">
+  <div *ngIf="this.moviesDetail">
+    <div class="row justify-content-center detail-body">
+      <div class="col-3">
+        <img class="float-end" src="{{this.imageUrl + this.moviesDetail.poster_path}}"
+             alt="{{this.moviesDetail.title}}">
       </div>
-      <div class="row justify-content-between">
-        <div class="col-4 star">
-          <ngb-rating [rate]="moviesDetail.vote_average/2">
-            <ng-template let-fill="fill" let-index="index">
-              <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
-            </ng-template>
-          </ngb-rating>
-          <span>{{this.moviesDetail.vote_average | roundNumber }}</span>
+      <div class="col-4">
+        <div class="row movie-detail-title">
+          <span> {{this.moviesDetail.title | uppercase }}</span>
+          <p>{{this.moviesDetail.tagline | uppercase }}</p>
         </div>
-        <div class="col-4">
-          <span>{{this.moviesDetail.original_language | uppercase }}</span>/
-          <span>{{this.moviesDetail.runtime }}MIN.</span>
-          <span *ngIf="this.moviesDetail.release_date">/{{this.moviesDetail.release_date.substring(0, 4) }}</span>
-        </div>
-      </div>
-      <div class="row mt-3">
-        <span class="title">THE GENRES</span>
-      </div>
-      <div class="row" *ngIf="this.moviesDetail.genres">
-        <div class="col">
-          <div class="form-check form-check-inline custom-checkbox" *ngFor="let genreItem of this.moviesDetail.genres">
-            <input class="form-check-input" type="radio" checked>
-            <label class="form-check-label">{{genreItem.name | uppercase}}</label>
+        <div class="row justify-content-between">
+          <div class="col-4 star">
+            <ngb-rating [rate]="moviesDetail.vote_average/2">
+              <ng-template let-fill="fill" let-index="index">
+                <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
+              </ng-template>
+            </ngb-rating>
+            <span>{{this.moviesDetail.vote_average | roundNumber }}</span>
+          </div>
+          <div class="col-4 movies-info">
+            <span>{{this.moviesDetail.original_language | uppercase }}</span>/
+            <span>{{this.moviesDetail.runtime }}</span><span class="ms-1">MIN.</span>
+            <span *ngIf="this.moviesDetail.release_date">/{{this.moviesDetail.release_date.substring(0, 4) }}</span>
           </div>
         </div>
-      </div>
-      <div class="row mt-3">
-        <span class="title">THE SYNOPSIS</span>
-      </div>
-      <div class="row">
-        <span class="synopsis">{{this.moviesDetail.overview}}</span>
-      </div>
-
-      <div class="row mt-3">
-        <span class="title">THE CAST</span>
-      </div>
-
-      <div class="row" *ngIf="this.listCast">
-        <ngb-carousel>
-          <ng-container *ngFor="let groupsItem of this.slideGroups">
-            <ng-template ngbSlide>
-              <div class="col">
-                <ng-container *ngFor="let castItem of groupsItem">
-                  <ng-container *ngIf="castItem.profile_path">
-                    <div class="image-cast">
-                      <img [routerLink]="['/actor', castItem.cast_id, 'detail']"
-                           src="{{ this.profileUrl + castItem.profile_path }}">
-                    </div>
-                  </ng-container>
-                </ng-container>
-              </div>
-            </ng-template>
-          </ng-container>
-        </ngb-carousel>
-      </div>
-
-
-<!--      <div class="row" *ngIf="this.listCast">-->
-<!--        <ng-container *ngFor="let castItem of this.listCast">-->
-<!--          <ng-container *ngIf="castItem.profile_path">-->
-<!--            <div class="image-cast">-->
-<!--              <img [routerLink]="['/actor', castItem.cast_id, 'detail']" src="{{ this.profileUrl + castItem.profile_path }}">-->
-<!--            </div>-->
-<!--          </ng-container>-->
-<!--        </ng-container>-->
-<!--      </div>-->
-      <div class="row justify-content-between mt-3">
-        <div class="col-9">
-          <a *ngIf="this.moviesDetail.homepage" class="btn btn-outline-success d-inline-flex align-items-center me-3"
-             href="{{this.moviesDetail.homepage}}" target="_blank">
-            <span>Website</span>
-            <span class="material-icons">link</span>
-          </a>
-          <a *ngIf="this.moviesDetail.imdb_id" class="btn btn-outline-success d-inline-flex align-items-center me-3"
-             href="{{'https://www.imdb.com/title/'+ this.moviesDetail.imdb_id}}" target="_blank">
-            <span>IMDB</span>
-            <span class="material-icons">local_movies</span>
-          </a>
-          <button (click)="openDialog()" class="btn btn-outline-success d-inline-flex align-items-center">
-            <span>Trailer</span>
-          </button>
+        <div class="row mt-3">
+          <span class="title">THE GENRES</span>
         </div>
-        <div class="col-3">
-          <button  class="btn btn btn-success d-flex align-items-center float-end" (click)="this.goBack()">
-            <span class="material-icons">arrow_back</span>
-            <span>Back</span>
-          </button>
+        <div class="row" *ngIf="this.moviesDetail.genres">
+          <div class="col">
+            <div class="form-check form-check-inline custom-checkbox"
+                 *ngFor="let genreItem of this.moviesDetail.genres">
+              <input class="form-check-input" type="radio" checked>
+              <label class="form-check-label">{{genreItem.name | uppercase}}</label>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row">
+        <div class="row mt-3">
+          <span class="title">THE SYNOPSIS</span>
+        </div>
+        <div class="row">
+          <span class="synopsis">{{this.moviesDetail.overview}}</span>
+        </div>
+        <div class="row mt-3">
+          <span class="title">THE CAST</span>
+        </div>
+        <div class="row align-items-center" *ngIf="this.listCast">
+          <div class="col-1 pe-0"><span class="material-icons" (click)="previousCastItems()"> arrow_back_ios </span>
+          </div>
+          <div class="col d-flex cast-items ps-0" id="castItemsContainer">
+            <ng-container *ngFor="let castItem of this.listCast">
+              <ng-container *ngIf="castItem.profile_path">
+                <div class="image-cast">
+                  <img data-bs-toggle="tooltip" data-bs-placement="top" title="{{castItem.original_name}}"
+                       [routerLink]="['/actor', castItem.id, 'detail']"
+                       src="{{ this.profileUrl + castItem.profile_path }}">
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+          <div class="col-1"><span class="material-icons" (click)="nextCastItems()"> arrow_forward_ios </span></div>
+        </div>
+        <div class="row justify-content-between mt-3">
+          <div class="col-9">
+            <a *ngIf="this.moviesDetail.homepage" class="btn btn-outline-success d-inline-flex align-items-center me-3"
+               href="{{this.moviesDetail.homepage}}" target="_blank">
+              <span>Website</span>
+              <span class="material-icons">link</span>
+            </a>
+            <a *ngIf="this.moviesDetail.imdb_id" class="btn btn-outline-success d-inline-flex align-items-center me-3"
+               href="{{'https://www.imdb.com/title/'+ this.moviesDetail.imdb_id}}" target="_blank">
+              <span>IMDB</span>
+              <span class="material-icons">local_movies</span>
+            </a>
+            <button *ngIf="this.videoMovies" (click)="this.openYoutubeDialog()"
+                    class="btn btn-outline-success d-inline-flex align-items-center">
+              <span>Trailer</span>
+            </button>
+          </div>
+          <div class="col-3">
+            <button class="btn btn btn-success d-flex align-items-center float-end" (click)="this.goBack()">
+              <span class="material-icons">arrow_back</span>
+              <span>Back</span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
 
+        </div>
       </div>
     </div>
   </div>
-  <div class="row">
-    <h1>RECOMMENDED</h1>
-    <span>MOVIES</span>
+  <div class="row movie-detail-title">
+    <h1 class="mb-0">RECOMMENDED</h1>
+    <p class="pt-0">MOVIES</p>
   </div>
-
-  <div class="row" *ngIf="this.recommendationLst">
-    <ng-container *ngFor="let recommentItem of this.recommendationLst">
-      <ng-container *ngIf="recommentItem.poster_path">
-        <div class="card item-movie p-0">
-          <img class="card-img-top" [routerLink]="['/movie',recommentItem.id,'detail']"
-               src="{{this.recommentUrl + recommentItem.poster_path}}">
-          <div class="card-body">
-            <h5 class="card-title">{{recommentItem.title}}</h5>
+  <div class="row align-items-center" *ngIf="this.recommendationLst">
+    <div class="col-1 pe-0 "><span class="material-icons" (click)="previousMoviesRecommendedItems()"> arrow_back_ios </span></div>
+    <div class="col">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="recommended-items" id="castMoviesRecommendedContainer">
+            <ng-container *ngFor="let recommentItem of this.recommendationLst">
+              <ng-container *ngIf="recommentItem.poster_path">
+                <div class="card item-movie p-1 ms-1">
+                  <img class="card-img-top" [routerLink]="['/movie',recommentItem.id,'detail']"
+                       src="{{this.recommentUrl + recommentItem.poster_path}}">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">{{recommentItem.title}}</h5>
+                  </div>
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
-      </ng-container>
-    </ng-container>
+      </div>
+    </div>
+    <div class="col-1"><span class="material-icons" (click)="nextMoviesRecommendedItems()"> arrow_forward_ios </span>
+    </div>
   </div>
-
-
-
 </div>
 
 

@@ -14,10 +14,11 @@ import {YouTubePlayerModule} from "@angular/youtube-player";
 })
 
 export class YoutubeDialogComponent implements OnInit {
-  videoId = 'dG91B3hHyY4';
+  videoId = '';
   apiLoaded = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { videoId: string }) {
+    this.videoId = data.videoId;
   }
 
   ngOnInit(): void {

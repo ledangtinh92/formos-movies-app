@@ -1,19 +1,19 @@
 <div class="navbar-right theme-main-color">
   <div>
     <span class="title">DISCOVER</span>
-    <div class="row item" [routerLink]="['/movie', discoverType.POPULAR]">
+    <div class="row item" (click)="routerlinkDiscover(discoverType.POPULAR)">
       <div class="d-flex align-items-center">
         <span class="material-icons">favorite</span>
         <p class="mb-0 ml-2 ps-1 ">Popular</p>
       </div>
     </div>
-    <div class="row item" [routerLink]="['/movie', discoverType.TOP_RATED]">
+    <div class="row item" (click)="routerlinkDiscover(discoverType.TOP_RATED)">
       <div class="d-flex align-items-center">
         <span class="material-icons">stars</span>
         <p class="mb-0 ml-2 ps-1">Top Rated</p>
       </div>
     </div>
-    <div class="row item" [routerLink]="['/movie', discoverType.UPCOMING]">
+    <div class="row item" (click)="routerlinkDiscover(discoverType.UPCOMING)">
       <div class="d-flex align-items-center">
         <span class="material-icons">calendar_today</span>
         <p class="mb-0 ml-2 ps-1">Upcoming</p>

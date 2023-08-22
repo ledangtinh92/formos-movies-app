@@ -12,7 +12,7 @@
     font-size: x-large;
   }
   & p {
-    font-weight: 400;
+    font-weight: 500;
     color: #555555;
   }
 }
@@ -39,18 +39,56 @@
   }
 }
 
-.image-cast{
-  width: 3rem;
+.material-icons{
   cursor: pointer;
-  & img{
-    width: 45px;
-    height: 45px;
-    overflow: hidden;
-    border-radius: 50%;
+}
+
+.cast-items{
+  position: relative;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  & .col{
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  & .image-cast{
+    padding: 5px;
+    width: 3rem;
+    cursor: pointer;
+    & img{
+      width: 45px;
+      height: 45px;
+      overflow: hidden;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
   }
 }
 
-.item-movie{
-  width: 10rem;
+.image-cast:hover img {
+  transform: scale(1.2);
 }
 
+.movies-info{
+  font-weight:bold;
+  color: rgba(17,74,6,0.91);
+}
+
+.recommended-items {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: hidden;
+  & .item-movie{
+    width: 10rem;
+    cursor: pointer;
+    background: var(--background);
+    color: var(--on-background);
+  }
+  & .card-title{
+    font-weight: 500;
+    color: rgba(101,102,98,0.77);
+  }
+
+}

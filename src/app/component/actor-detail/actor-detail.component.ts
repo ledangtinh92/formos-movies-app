@@ -16,8 +16,11 @@ export class ActorDetailComponent implements  OnInit{
   porsonInfo!: IPersonModel;
   personMovisLst: IMovie[] = [];
   imageUrl = '';
-  sortTypeValues = Object.keys(SortType);
-  sortTypeSelect: any;
+  sortTypeValues = Object.entries(SortType).map(([key, value]) => ({
+    key: key,
+    value: value
+  }));
+  sortTypeSelect = SortType.POPULARITY;
   constructor(private activeRoute: ActivatedRoute,
               private applicationConfigService: ApplicationConfigService,
               private themoviedbService: ThemoviedbService) {
@@ -32,7 +35,34 @@ export class ActorDetailComponent implements  OnInit{
 
       this.themoviedbService.getPersonMoviesLst(params['id']).subscribe(value => {
         this.personMovisLst = value;
+        this.personMovisLst = this.personMovisLst.sort((a, b) => a.popularity - b.popularity)
       });
     });
+  }
+
+  goBack() {
+    window.history.back();
+  }
+
+  changeSort() {
+    if(this.personMovisLst){
+      switch (this.sortTypeSelect) {
+        case "Popularity":
+          this.personMovisLst = this.personMovisLst.sort((a, b) => a.popularity - b.popularity);
+          break;
+        case "Votes Average":
+          this.personMovisLst = this.personMovisLst.sort((a, b) => a.vote_average - b.vote_average);
+          break;
+        case "Original Title":
+          this.personMovisLst = this.personMovisLst.sort((a, b) => a.original_title.localeCompare(b.original_title));
+          break;
+        case "Release Date":
+          this.personMovisLst = this.personMovisLst.sort((a, b) => a.release_date.localeCompare(b.release_date));
+          break;
+        default:
+          this.personMovisLst = this.personMovisLst.sort((a, b) => a.popularity - b.popularity);
+          break;
+      }
+    }
   }
 }

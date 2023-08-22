@@ -5,9 +5,10 @@ import {SharedLibsModule} from "../../shared/shared-libs.module";
 import {MovieDetailComponent} from "./movie-detail.component";
 import {NgbCarousel, NgbRating, NgbSlide} from "@ng-bootstrap/ng-bootstrap";
 import {YouTubePlayerModule} from "@angular/youtube-player";
+import {ImageSliderComponent} from "../../shared/image-slider/image-slider.component";
 
 @NgModule({
-    imports: [SharedLibsModule, RouterModule.forChild(movieDetailState), NgbRating, YouTubePlayerModule, NgbCarousel, NgbSlide],
+  imports: [SharedLibsModule, RouterModule.forChild(movieDetailState), NgbRating, YouTubePlayerModule, NgbCarousel, NgbSlide, ImageSliderComponent],
     declarations: [MovieDetailComponent],
 })
 export class MovieDetailModule {}

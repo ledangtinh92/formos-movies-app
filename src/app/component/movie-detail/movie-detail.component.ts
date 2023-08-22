@@ -25,8 +25,6 @@ export class MovieDetailComponent implements OnInit {
   listCast: ICast[] = [];
   recommendationLst: IMovie[] = [];
   videoMovies!: IVideoModel;
-  slideGroups: ICast[][] = [];
-
 
   constructor(private themoviedbService: ThemoviedbService,
               private applicationConfigService: ApplicationConfigService,
@@ -42,16 +40,10 @@ export class MovieDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.activeRoute.params.subscribe(params => {
       this.loadDetailMovie(params['id']);
       this.themoviedbService.getMovieCredits(params['id']).subscribe(value => {
         this.listCast = value;
-        let numberOfItemsPerSlide = 10;
-        for (let i = 0; i < this.listCast.length; i += numberOfItemsPerSlide) {
-          const slide = this.listCast.slice(i, i + numberOfItemsPerSlide)
-          this.slideGroups.push(slide);
-        }
       });
       this.themoviedbService.getMovieRecommendation(params['id'], 1).subscribe(value => {
         if(value){
@@ -83,13 +75,33 @@ export class MovieDetailComponent implements OnInit {
     }
   }
 
-  goBack() {
+  goBack():void {
     window.history.back();
   }
 
-  openDialog() {
+  openYoutubeDialog():void {
     this.dialog.open(YoutubeDialogComponent, {
-      data: { videoId: 'YOUTUBE_VIDEO_ID' },
+      data: { videoId: this.videoMovies.key },
     });
+  }
+
+  previousCastItems():void {
+    const container = document.getElementById("castItemsContainer");
+    container!.scrollLeft -= 50;
+  }
+
+  nextCastItems():void {
+    const container = document.getElementById("castItemsContainer");
+    container!.scrollLeft += 50;
+  }
+
+  previousMoviesRecommendedItems() {
+    const container = document.getElementById("castMoviesRecommendedContainer");
+    container!.scrollLeft -= 50;
+  }
+
+  nextMoviesRecommendedItems() {
+    const container = document.getElementById("castMoviesRecommendedContainer");
+    container!.scrollLeft += 50;
   }
 }

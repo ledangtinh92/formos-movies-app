@@ -4,12 +4,13 @@ export class SearchModel {
   page: number;
   type: string;
   genres: IGenres[];
+  search: string;
 
-
-  constructor(page: number, type: string) {
-    this.page = page;
-    this.type = type;
+  constructor() {
+    this.page = 0;
+    this.type = '';
     this.genres = [];
+    this.search = '';
   }
 
   getNextPage(): number {

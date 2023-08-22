@@ -4,32 +4,30 @@
             <img class="float-end" src="{{this.imageUrl + this.porsonInfo.profile_path}}">
         </div>
         <div class="col-4">
-            <div class="row movie-detail-title">
+            <div class="row actor-detail-title">
                 <span> {{this.porsonInfo.name | uppercase }}</span>
-                <p>{{this.porsonInfo.birthday }}</p>
-                <p>{{this.porsonInfo.deathday }}</p>
+                <p>
+                  {{this.porsonInfo.birthday }}
+                  {{this.porsonInfo.deathday }}
+                </p>
             </div>
             <div class="row mt-3">
-                <span>THE BIOGRAPHY</span>
+                <span class="title">THE BIOGRAPHY</span>
             </div>
             <div class="row">
-                <span>{{this.porsonInfo.biography}}</span>
+                <span class="biography">{{this.porsonInfo.biography}}</span>
             </div>
-
-            <div class="row mt-3">
-                <span>THE CAST</span>
-            </div>
-
             <div class="row justify-content-between mt-3">
                 <div class="col-6">
-                    <button class="btn btn-primary d-inline-flex align-items-center">
-                        <span>IMDB</span>
-                        <span class="material-icons">local_movies</span>
-                    </button>
+                  <a *ngIf="this.porsonInfo.imdb_id" class="btn btn-outline-success d-inline-flex align-items-center me-3"
+                     href="{{'https://www.imdb.com/name/'+ this.porsonInfo.imdb_id}}" target="_blank">
+                    <span>IMDB</span>
+                    <span class="material-icons">local_movies</span>
+                  </a>
                 </div>
                 <div class="col-6">
-                    <button class="btn btn-primary d-flex align-items-center float-end">
-                        <span class="material-icons">arrow_back</span>
+                    <button class="btn btn-success d-flex align-items-center float-end">
+                        <span class="material-icons" (click)="goBack()">arrow_back</span>
                         <span>Back</span>
                     </button>
                 </div>
@@ -37,30 +35,30 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="this.porsonInfo">
-        <h1>{{this.porsonInfo.name | uppercase }} <span>IN</span></h1>
-        <span>MOVIES</span>
+    <div class="row actor-detail-title" *ngIf="this.porsonInfo">
+        <h1 class="mb-0">{{this.porsonInfo.name | uppercase }} <span>IN</span></h1>
+        <p class="title">MOVIES</p>
     </div>
     <div class="row">
-        <span>Sort</span>
+        <span class="title">Sort</span>
     </div>
-    <div class="d-flex p-2 bd-highlight">
-        <div class="">
-            <select class="form-control" name="type" [(ngModel)]="sortTypeSelect" data-cy="type">
-                <option *ngFor="let sortType of sortTypeValues" [value]="sortType">
-                    {{sortType}}
+    <div class="row d-flex p-2 bd-highlight">
+        <div class="col-2">
+            <select class="form-control" name="type" [(ngModel)]="sortTypeSelect" data-cy="type" (change)="changeSort()">
+                <option *ngFor="let sortType of sortTypeValues;index as i" [value]="sortType.value">
+                    {{sortType.value}}
                 </option>
             </select>
         </div>
     </div>
-    <div class="row" *ngIf="this.personMovisLst">
+    <div class="row justify-content-center" *ngIf="this.personMovisLst">
         <ng-container *ngFor="let personMovis of this.personMovisLst">
             <ng-container *ngIf="personMovis.poster_path">
                 <div class="card item-movie p-0">
                     <div>
                         <img class="card-img-top" [routerLink]="['/movie',personMovis.id,'detail']"
                              src="{{this.imageUrl + personMovis.poster_path}}">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h5 class="card-title">{{personMovis.title}}</h5>
                         </div>
                     </div>

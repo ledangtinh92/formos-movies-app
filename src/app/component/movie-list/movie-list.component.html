@@ -1,36 +1,46 @@
 <div class="container-fluid container-body theme-main-color">
-  <div class="row category-title mt-4 mb-1">
-    <span>{{this.searchModel.type | uppercase}}</span>
+  <div class="row category-title mt-4 mb-1" *ngIf="this.typeLoad">
+    <span >{{this.typeLoad | uppercase}}</span>
     <p>CATEGORY</p>
   </div>
-
-  <div class="row">
-    {{this.searchModel| json}}
+  <div class="row category-title mt-4 mb-1" *ngIf="this.genres">
+    <p>GENRES : {{this.genres | uppercase}}</p>
+  </div>
+  <div class="row category-title mt-4 mb-1" *ngIf="this.searchName">
+    <p>List of movies based on the "{{this.searchName}}" information.</p>
+  </div>
+  <div class="row justify-content-center" *ngIf="this.moviesLst && this.moviesLst.length == 0">
+    <div class="col">
+      <h1>No movies found, you can try again later or choose different search criteria!</h1>
+    </div>
   </div>
 
   <div class="row justify-content-md-center">
-    <div class="card p-0 item-movie theme-main-color" *ngFor="let item of this.moviesLst">
-      <img [routerLink]="['/movie',item.id,'detail']" src="{{this.imageUrl + item.poster_path}}" class="card-img-top"
-           alt="{{item.original_title}}">
-      <div class="card-body text-center">
-        <p class="card-text" [routerLink]="['/movie',item.id,'detail']"
-           style="color: #555555">{{item.title | uppercase }}</p>
-        <p class="card-text star">
-          <ngb-rating [rate]="item.vote_average / 2">
-            <ng-template let-fill="fill" let-index="index">
-              <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
-            </ng-template>
-          </ngb-rating>
-        </p>
-        <div class="adult-icon" *ngIf="item.adult">
-          <span>18+</span>
+    <ng-container *ngFor="let item of this.moviesLst">
+      <ng-container *ngIf="item.poster_path">
+        <div class="card p-0 item-movie theme-main-color" >
+          <img [routerLink]="['/movie',item.id,'detail']" src="{{this.imageUrl + item.poster_path}}" class="card-img-top"
+               alt="{{item.original_title}}">
+          <div class="card-body text-center">
+            <p class="card-text" [routerLink]="['/movie',item.id,'detail']"
+               style="color: #555555">{{item.title | uppercase }}</p>
+            <p class="card-text star">
+              <ngb-rating [rate]="item.vote_average / 2">
+                <ng-template let-fill="fill" let-index="index">
+                  <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
+                </ng-template>
+              </ngb-rating>
+            </p>
+            <div class="adult-icon" *ngIf="item.adult">
+              <span>18+</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div *ngIf="loading" class="loading-indicator">Loading...</div>
+      </ng-container>
+    </ng-container>
   </div>
   <div class="row justify-content-end pt-5 pb-5">
-    <div class="col-2">
+    <div class="col-2" *ngIf="this.moviesLst.length > 0 && !isLastPage">
       <button class="btn btn-primary" (click)="this.loadMoreData()">
         Get More <span class='bi bi-caret-down'></span>
       </button>

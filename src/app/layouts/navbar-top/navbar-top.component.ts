@@ -3,6 +3,8 @@ import {Router} from '@angular/router';
 import {ThemeService} from "../../shared/themes/themes.service";
 import {ThemoviedbService} from "src/app/service/themoviedb-service";
 import {IPage} from "src/app/model/page.model";
+import {DiscoverType} from "../../enums/discover.type.model";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-navbar-top',
@@ -14,13 +16,13 @@ export class NavbarTopComponent implements OnInit {
   searchQueryOld: string;
   isSearchExpanded: boolean = false;
   iconText = 'menu';
-  pageIndex = 1;
   @Output() menuToggleDrawer = new EventEmitter<string>();
 
   constructor(
     private router: Router,
     private themeService: ThemeService,
     private themovideoService: ThemoviedbService,
+    private spinner: NgxSpinnerService
   ) {
     this.searchQuery = '';
     this.searchQueryOld = '';
@@ -40,6 +42,7 @@ export class NavbarTopComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchQuery = this.themovideoService.searchParams.search;
   }
 
   toggle(): void {
@@ -58,11 +61,24 @@ export class NavbarTopComponent implements OnInit {
   }
 
   doSearch(): void {
-    if(this.searchQueryOld != this.searchQuery) {
-      this.themovideoService.searchMovieByName(this.searchQuery,this.pageIndex).subscribe((data: IPage):void => {
-        this.searchQueryOld = this.searchQuery;
-        this.themovideoService.sendMoviesData(data.results);
-      })
+    this.spinner.show();
+    if (this.searchQueryOld != this.searchQuery) {
+      this.searchQueryOld = this.searchQuery;
+      this.themovideoService.searchParams.search = this.searchQueryOld;
+      this.themovideoService.searchParams.type = '';
+      this.themovideoService.searchParams.page = 0;
+      this.themovideoService.getMovieList().subscribe({
+        next: result => {
+          if (result) {
+            this.themovideoService.sendMoviesData(result.results)
+          }
+          this.spinner.hide();
+        },
+        error:err => {
+          this.spinner.hide();
+        }
+      });
+      this.router.navigate(['/movie']);
     }
   }
 }

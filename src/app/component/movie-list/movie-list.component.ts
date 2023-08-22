@@ -1,15 +1,12 @@
 import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IPage} from "../../model/page.model";
 import {IMovie} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
-import {first} from "rxjs";
 import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
 import {ActivatedRoute} from "@angular/router";
-import {SearchModel} from "../../model/search.model";
-import {IGenres} from "../../model/genre.model";
 import {NgxSpinnerService} from "ngx-spinner";
+import {PosterSizesEnums} from "../../enums/image.model";
 
 @Component({
   selector: 'app-home',
@@ -18,12 +15,12 @@ import {NgxSpinnerService} from "ngx-spinner";
 })
 export class MovieListComponent implements OnInit {
   @ViewChild(CdkVirtualScrollViewport) viewport!: CdkVirtualScrollViewport;
-  pageInfo!: IPage;
   moviesLst: IMovie[];
   imageUrl = ''
-  loading = false;
   typeLoad = '';
-  searchModel: SearchModel = new SearchModel(0, '');
+  genres = ''
+  searchName='';
+  isLastPage: boolean = false;
 
   constructor(private themoviedbService: ThemoviedbService,
               private applicationConfigService: ApplicationConfigService,
@@ -31,48 +28,42 @@ export class MovieListComponent implements OnInit {
               private spinner: NgxSpinnerService,
               private activeRoute: ActivatedRoute) {
     this.moviesLst = []
-    this.imageUrl = this.applicationConfigService.getEndpointImage('/w500');
+    this.imageUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W500);
     this.config.max = 5;
     this.config.readonly = true;
+    this.typeLoad = this.themoviedbService.searchParams.type;
   }
 
   ngOnInit(): void {
-    this.activeRoute.params.subscribe(params => {
-      this.searchModel = new SearchModel(0, params['type']);
-      this.moviesLst = [];
-      this.loadMoreData();
-    });
-    this.themoviedbService.getGenresData().subscribe(value => {
-      if (value) {
-        this.searchModel.genres = value as IGenres[];
-      }
-    });
     this.themoviedbService.getMoviesData().subscribe(data => {
       if(data) {
         this.moviesLst = data;
+        this.typeLoad = this.themoviedbService.searchParams.type;
+        this.genres = this.themoviedbService.searchParams.genres.map(item => item.name).join(',');
+        this.searchName = this.themoviedbService.searchParams.search;
       }
-    })
+    });
   }
 
   loadMoreData(): void {
-    this.spinner.show();
-    if (!this.loading) {
-      this.loading = true;
-      this.themoviedbService.getMovieList(this.searchModel).pipe(
-        first()
-      ).subscribe({
-        next: value => {
-          this.spinner.hide();
-          this.pageInfo = value;
-          this.searchModel.page = this.pageInfo.page;
-          this.moviesLst.push(...this.pageInfo.results as IMovie[]);
-          this.loading = false;
-        },
-        error: error => {
-          this.spinner.hide();
-          this.loading = false;
-        }
-      })
+    if(this.isLastPage){
+      return;
     }
+    this.spinner.show();
+    this.themoviedbService.getMovieList().subscribe({
+      next: result => {
+        this.spinner.hide();
+        if (result){
+          if(result.page>=result.total_pages){
+            this.isLastPage = true;
+          }
+          if (result.results && result.results.length>0) {
+            this.moviesLst.push(...result.results as IMovie[]);
+          }
+        }
+      }, error: error => {
+        this.spinner.hide();
+      }
+    });
   }
 }
