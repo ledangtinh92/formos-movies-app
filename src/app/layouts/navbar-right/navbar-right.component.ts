@@ -22,7 +22,7 @@ export class NavbarRightComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const genresLst = this.themoviedbService.getAllGenresOfMovie().subscribe(
+    this.themoviedbService.getAllGenresOfMovie().subscribe(
       {
         next: value => {
           if (value) {
@@ -34,6 +34,11 @@ export class NavbarRightComponent implements OnInit {
         }
       }
     )
+    this.themoviedbService.getSearchParamData().subscribe(value => {
+      if(value.genres.length == 0 && this.genres.length >0) {
+        this.genres.forEach(genre =>genre.checked = false);
+      }
+    });
   }
 
   onCheckboxChange(): void {
@@ -43,6 +48,7 @@ export class NavbarRightComponent implements OnInit {
     this.themoviedbService.searchParams.type = '';
     this.themoviedbService.searchParams.search ='';
     this.themoviedbService.searchParams.page = 0;
+    this.themoviedbService.sendSearchParam();
     this.themoviedbService.getMovieList().subscribe({
       next: result => {
         if (result) {
@@ -62,6 +68,9 @@ export class NavbarRightComponent implements OnInit {
     this.themoviedbService.searchParams.type = POPULAR;
     this.themoviedbService.searchParams.page = 0;
     this.themoviedbService.searchParams.search ='';
+    this.themoviedbService.searchParams.genres = [];
+    this.genres.forEach(item => item.checked = false);
+    this.themoviedbService.sendSearchParam();
     this.themoviedbService.getMovieList().subscribe({
       next: result => {
         if (result) {

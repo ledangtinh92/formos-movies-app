@@ -1,10 +1,11 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-import {ThemeService} from "../../shared/themes/themes.service";
 import {ThemoviedbService} from "src/app/service/themoviedb-service";
-import {IPage} from "src/app/model/page.model";
-import {DiscoverType} from "../../enums/discover.type.model";
 import {NgxSpinnerService} from "ngx-spinner";
+import {LocalStorageService} from "ngx-webstorage";
+import {ThemeService} from "../../shared/themes/themes.service";
+import {THEMES_ACTIVE} from "../../constant/storage.constant";
+import {SearchModel} from "../../model/search.model";
 
 @Component({
   selector: 'app-navbar-top',
@@ -17,12 +18,15 @@ export class NavbarTopComponent implements OnInit {
   isSearchExpanded: boolean = false;
   iconText = 'menu';
   @Output() menuToggleDrawer = new EventEmitter<string>();
+  themeSelect!: boolean;
+  searchPamra! : SearchModel;
 
   constructor(
     private router: Router,
     private themeService: ThemeService,
-    private themovideoService: ThemoviedbService,
-    private spinner: NgxSpinnerService
+    private themoviedbService: ThemoviedbService,
+    private spinner: NgxSpinnerService,
+    private storage: LocalStorageService,
   ) {
     this.searchQuery = '';
     this.searchQueryOld = '';
@@ -42,7 +46,22 @@ export class NavbarTopComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchQuery = this.themovideoService.searchParams.search;
+    this.searchPamra = this.themoviedbService.searchParams;
+    this.themoviedbService.getSearchParamData().subscribe(value => {
+      this.searchQuery = value.search;
+    })
+
+    const themeActive = this.storage.retrieve(THEMES_ACTIVE)
+    if(themeActive){
+      this.themeService.setTheme(themeActive.name);
+      if (themeActive.name === 'light') {
+        this.themeSelect = false;
+      } else {
+        this.themeSelect = true;
+      }
+    }else {
+      this.storage.store(THEMES_ACTIVE,this.themeService.getActiveTheme());
+    }
   }
 
   toggle(): void {
@@ -52,6 +71,7 @@ export class NavbarTopComponent implements OnInit {
     } else {
       this.themeService.setTheme('light');
     }
+    this.storage.store(THEMES_ACTIVE,this.themeService.getActiveTheme());
   }
 
   onBlur(): void {
@@ -61,18 +81,20 @@ export class NavbarTopComponent implements OnInit {
   }
 
   doSearch(): void {
-    this.spinner.show();
     if (this.searchQueryOld != this.searchQuery) {
+      this.spinner.show();
       this.searchQueryOld = this.searchQuery;
-      this.themovideoService.searchParams.search = this.searchQueryOld;
-      this.themovideoService.searchParams.type = '';
-      this.themovideoService.searchParams.page = 0;
-      this.themovideoService.getMovieList().subscribe({
+      this.themoviedbService.searchParams.search = this.searchQueryOld;
+      this.themoviedbService.searchParams.type = '';
+      this.themoviedbService.searchParams.page = 0;
+      this.themoviedbService.searchParams.genres = [];
+      this.themoviedbService.sendSearchParam();
+      this.themoviedbService.getMovieList().subscribe({
         next: result => {
-          if (result) {
-            this.themovideoService.sendMoviesData(result.results)
-          }
           this.spinner.hide();
+          if (result) {
+            this.themoviedbService.sendMoviesData(result.results)
+          }
         },
         error:err => {
           this.spinner.hide();
@@ -80,5 +102,14 @@ export class NavbarTopComponent implements OnInit {
       });
       this.router.navigate(['/movie']);
     }
+  }
+
+  clickHomeMenu():void {
+    this.themoviedbService.searchParams.search = '';
+    this.themoviedbService.searchParams.type = '';
+    this.themoviedbService.searchParams.page = 0;
+    this.themoviedbService.searchParams.genres = [];
+    this.themoviedbService.sendSearchParam();
+    this.router.navigate(['/']);
   }
 }

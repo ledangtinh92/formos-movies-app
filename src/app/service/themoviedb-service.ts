@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map, Observable, Subject} from 'rxjs';
 import {ApplicationConfigService} from "../config/application-config.service";
@@ -13,10 +13,11 @@ import {IPersonModel} from "../model/person.model";
 import {IVideoModel} from "src/app/model/video.model";
 import {NgxSpinnerService} from "ngx-spinner";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class ThemoviedbService {
-  private moviesLst = new Subject<IMovie[]>();
   public searchParams = new SearchModel();
+  private moviesLst = new Subject<IMovie[]>();
+  private resetSearchParams = new Subject<SearchModel>();
   private pageResult!: IPage;
   private resourceUrl = this.applicationConfigService.getEndpointApi('');
 
@@ -26,7 +27,15 @@ export class ThemoviedbService {
               private dateService: DateService) {
   }
 
-  sendMoviesData(data: any):void {
+  sendSearchParam(): void {
+    this.resetSearchParams.next(this.searchParams)
+  }
+
+  getSearchParamData(): Observable<SearchModel> {
+    return this.resetSearchParams.asObservable();
+  }
+
+  sendMoviesData(data: any): void {
     this.moviesLst.next(data);
   }
 
@@ -67,8 +76,11 @@ export class ThemoviedbService {
         if (response.body !== null) {
           this.pageResult = response.body;
           this.searchParams.page = response.body.page;
-          if(response.body.page >= response.body.total_pages){
+          if (response.body.page >= response.body.total_pages) {
             this.searchParams.page = response.body.total_pages;
+            this.searchParams.isLastPage = true;
+          }else {
+            this.searchParams.isLastPage = false;
           }
           return response.body
         } else {
@@ -79,20 +91,20 @@ export class ThemoviedbService {
     );
   }
 
-  getTopMoviesNowPlaying():Observable<IMovie[]>{
-    return this.http.get<{ results: IMovie[] }>(`${this.resourceUrl}/movie/now_playing`, { observe: 'response' }).pipe(
+  getTopMoviesNowPlaying(): Observable<IMovie[]> {
+    return this.http.get<{ results: IMovie[] }>(`${this.resourceUrl}/movie/now_playing`, {observe: 'response'}).pipe(
       map(response => response.body?.results ?? [])
     );
-}
+  }
 
-  getAllGenresOfMovie():Observable<IGenres[]> {
-    return this.http.get<{ genres: IGenres[] }>(`${this.resourceUrl}/genre/movie/list`, { observe: 'response' }).pipe(
+  getAllGenresOfMovie(): Observable<IGenres[]> {
+    return this.http.get<{ genres: IGenres[] }>(`${this.resourceUrl}/genre/movie/list`, {observe: 'response'}).pipe(
       map(response => response.body?.genres ?? [])
     );
   }
 
-  getMovieDetail(movie_id : string):Observable<IMovieDetail> {
-    return this.http.get<IMovieDetail>(`${this.resourceUrl}/movie/${movie_id}`, {observe: 'response' }).pipe(
+  getMovieDetail(movie_id: string): Observable<IMovieDetail> {
+    return this.http.get<IMovieDetail>(`${this.resourceUrl}/movie/${movie_id}`, {observe: 'response'}).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body;
@@ -103,8 +115,10 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieCredits(movie_id : string):Observable<ICast[]>{
-    return this.http.get<{cast: ICast[]}>(`${this.resourceUrl}/movie/${movie_id}/credits`, {observe: 'response' }).pipe(
+  getMovieCredits(movie_id: string): Observable<ICast[]> {
+    return this.http.get<{
+      cast: ICast[]
+    }>(`${this.resourceUrl}/movie/${movie_id}/credits`, {observe: 'response'}).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body.cast;
@@ -115,12 +129,15 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieRecommendation(movie_id :string, page: number):Observable<IPage>{
+  getMovieRecommendation(movie_id: string, page: number): Observable<IPage> {
     let options: HttpParams = new HttpParams();
     options.append('language', 'en-US');
     options.append('page', page);
 
-    return this.http.get<IPage>(`${this.resourceUrl}/movie/${movie_id}/recommendations`, { params: options, observe: 'response' }).pipe(
+    return this.http.get<IPage>(`${this.resourceUrl}/movie/${movie_id}/recommendations`, {
+      params: options,
+      observe: 'response'
+    }).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body;
@@ -131,10 +148,13 @@ export class ThemoviedbService {
     );
   }
 
-  getActorInfo(person_id: string):Observable<IPersonModel> {
+  getActorInfo(person_id: string): Observable<IPersonModel> {
     let options: HttpParams = new HttpParams();
     options.append('language', 'en-US');
-    return this.http.get<IPersonModel>(`${this.resourceUrl}/person/${person_id}`, { params: options, observe: 'response' }).pipe(
+    return this.http.get<IPersonModel>(`${this.resourceUrl}/person/${person_id}`, {
+      params: options,
+      observe: 'response'
+    }).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body;
@@ -145,10 +165,13 @@ export class ThemoviedbService {
     );
   }
 
-  getPersonMoviesLst(person_id: string):Observable<IMovie[]>{
+  getPersonMoviesLst(person_id: string): Observable<IMovie[]> {
     let options: HttpParams = new HttpParams();
     options = options.append('language', 'en-US');
-    return this.http.get<{cast: IMovie[]} >(`${this.resourceUrl}/person/${person_id}/movie_credits`, { params: options, observe: 'response' }).pipe(
+    return this.http.get<{ cast: IMovie[] }>(`${this.resourceUrl}/person/${person_id}/movie_credits`, {
+      params: options,
+      observe: 'response'
+    }).pipe(
       map(response => {
         if (response.body !== null) {
           return response.body.cast;

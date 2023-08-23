@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-expand-lg p-0 theme-main-color">
   <div class="d-inline-flex">
     <span class="material-icons" (click)="this.toggleDrawer()">{{iconText}}</span>
@@ -6,10 +5,12 @@
   <a class="navbar-brand" (click)="this.toggleDrawer()">
     Formos Movies
   </a>
-  <a routerLink="/" routerLinkActive="active"><span class='material-icons'>home</span>Home</a>
+  <div class="d-flex align-items-center">
+    <span class='material-icons icon-home' (click)="clickHomeMenu()">home</span>
+  </div>
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <span class="material-icons theme-main-color">menu</span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -33,7 +34,7 @@
       </div>
       <span  class="material-icons yellow-color icon-size">light_mode</span>&nbsp;
       <div class="form-check form-switch custom-switch">
-        <input class="form-check-input custom-control-input" (click)="toggle()" type="checkbox"
+        <input class="form-check-input custom-control-input" [(ngModel)] = "themeSelect" (click)="toggle()" type="checkbox"
                id="flexSwitchCheckDisabled">
       </div>
       <span class="bi bi-moon"></span>

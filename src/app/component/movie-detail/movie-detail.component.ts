@@ -97,11 +97,11 @@ export class MovieDetailComponent implements OnInit {
 
   previousMoviesRecommendedItems() {
     const container = document.getElementById("castMoviesRecommendedContainer");
-    container!.scrollLeft -= 50;
+    container!.scrollLeft -= 150;
   }
 
   nextMoviesRecommendedItems() {
     const container = document.getElementById("castMoviesRecommendedContainer");
-    container!.scrollLeft += 50;
+    container!.scrollLeft += 150;
   }
 }

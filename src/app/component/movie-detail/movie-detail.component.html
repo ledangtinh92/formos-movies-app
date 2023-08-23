@@ -47,7 +47,7 @@
           <span class="title">THE CAST</span>
         </div>
         <div class="row align-items-center" *ngIf="this.listCast">
-          <div class="col-1 pe-0"><span class="material-icons" (click)="previousCastItems()"> arrow_back_ios </span>
+          <div class="col-1 ps-0 pe-0 me-2 text-center"><span class="material-icons" (click)="previousCastItems()"> keyboard_double_arrow_left </span>
           </div>
           <div class="col d-flex cast-items ps-0" id="castItemsContainer">
             <ng-container *ngFor="let castItem of this.listCast">
@@ -60,7 +60,7 @@
               </ng-container>
             </ng-container>
           </div>
-          <div class="col-1"><span class="material-icons" (click)="nextCastItems()"> arrow_forward_ios </span></div>
+          <div class="col-1 text-center"><span class="material-icons" (click)="nextCastItems()"> keyboard_double_arrow_right </span></div>
         </div>
         <div class="row justify-content-between mt-3">
           <div class="col-9">
@@ -86,9 +86,6 @@
             </button>
           </div>
         </div>
-        <div class="row">
-
-        </div>
       </div>
     </div>
   </div>
@@ -97,8 +94,9 @@
     <p class="pt-0">MOVIES</p>
   </div>
   <div class="row align-items-center" *ngIf="this.recommendationLst">
-    <div class="col-1 pe-0 "><span class="material-icons" (click)="previousMoviesRecommendedItems()"> arrow_back_ios </span></div>
-    <div class="col">
+    <div class="col-1 pe-0 text-center"><span class="material-icons" (click)="previousMoviesRecommendedItems()"> keyboard_double_arrow_left </span>
+    </div>
+    <div class="col-10">
       <div class="row justify-content-center">
         <div class="col-12">
           <div class="recommended-items" id="castMoviesRecommendedContainer">
@@ -117,7 +115,7 @@
         </div>
       </div>
     </div>
-    <div class="col-1"><span class="material-icons" (click)="nextMoviesRecommendedItems()"> arrow_forward_ios </span>
+    <div class="col-1 text-center"><span class="material-icons" (click)="nextMoviesRecommendedItems()"> keyboard_double_arrow_right </span>
     </div>
   </div>
 </div>

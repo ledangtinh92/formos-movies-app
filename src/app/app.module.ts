@@ -24,6 +24,7 @@ import {ScrollTrackerDirective} from "./shared/directive/scroll-tracker.directiv
 import { HomeComponent } from './component/home/home.component';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
+import {NgxWebstorageModule} from "ngx-webstorage";
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {MatDialogModule} from "@angular/material/dialog";
       themes: [lightTheme, darkTheme],
       active: 'light'
     }),
+    NgxWebstorageModule.forRoot(),
     NgbModule,
     NgxSpinnerModule,
     MatDialogModule,

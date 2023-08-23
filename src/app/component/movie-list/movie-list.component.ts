@@ -38,6 +38,7 @@ export class MovieListComponent implements OnInit {
     this.themoviedbService.getMoviesData().subscribe(data => {
       if(data) {
         this.moviesLst = data;
+        this.isLastPage = this.themoviedbService.searchParams.isLastPage;
         this.typeLoad = this.themoviedbService.searchParams.type;
         this.genres = this.themoviedbService.searchParams.genres.map(item => item.name).join(',');
         this.searchName = this.themoviedbService.searchParams.search;
@@ -54,7 +55,7 @@ export class MovieListComponent implements OnInit {
       next: result => {
         this.spinner.hide();
         if (result){
-          if(result.page>=result.total_pages){
+          if(result.page >= result.total_pages){
             this.isLastPage = true;
           }
           if (result.results && result.results.length>0) {

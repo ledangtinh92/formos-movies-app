@@ -65,4 +65,14 @@ export class ActorDetailComponent implements  OnInit{
       }
     }
   }
+
+  previousPersonMoviesItems() {
+    const container = document.getElementById("castPersonMoviesContainer");
+    container!.scrollLeft -= 150;
+  }
+
+  nextPersonMoviesItems() {
+    const container = document.getElementById("castPersonMoviesContainer");
+    container!.scrollLeft += 150;
+  }
 }

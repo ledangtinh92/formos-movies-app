@@ -28,8 +28,9 @@
       "@component/*": ["app/component/*"],
       "@service/*": ["app/service/*"],
       "@model/*": ["app/model/*"],
+      "@constant/*": ["app/constant/*"],
       "@util/*": ["app/util/*"],
-      "@shared/*": ["app/shared/*"]
+      "@shared/*": ["app/shared/*"],
     }
   },
   "angularCompilerOptions": {
