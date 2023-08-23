@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IMovie, IMovieDetail} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
@@ -35,31 +35,58 @@ export class MovieDetailComponent implements OnInit {
     this.imageUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W342);
     this.recommentUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W342);
     this.profileUrl = this.applicationConfigService.getEndpointImage(ProfileSizesEnums.W45);
-    this.config.readonly =true;
+    this.config.readonly = true;
     this.config.max = 5;
   }
 
   ngOnInit(): void {
     this.activeRoute.params.subscribe(params => {
-      this.loadDetailMovie(params['id']);
-      this.themoviedbService.getMovieCredits(params['id']).subscribe(value => {
-        this.listCast = value;
-      });
-      this.themoviedbService.getMovieRecommendation(params['id'], 1).subscribe(value => {
-        if(value){
-          this.recommendationLst = value.results as IMovie[];
-        }
-      });
-      this.themoviedbService.getTrailerMovieById(params['id']).subscribe(value => {
-        if(value){
-          this.videoMovies = value;
-        }
-      })
+      const movieId = params['id'];
+      if (movieId && movieId == '') {
+        this.router.navigate(['404']);
+      }
+      this.loadDetailMovie(movieId);
+      this.themoviedbService.getMovieCredits(movieId)
+        .subscribe({
+          next: value => {
+            if (value) {
+              this.listCast = value;
+            }
+          },
+          error: err => {
+            console.log("getMovieRecommendation: " + err);
+            this.router.navigate(['404']);
+          }
+        });
+      this.themoviedbService.getMovieRecommendation(movieId, 1)
+        .subscribe({
+          next: value => {
+            if (value) {
+              this.recommendationLst = value.results as IMovie[];
+            }
+          },
+          error: err => {
+            console.log("getMovieRecommendation: " + err);
+            this.router.navigate(['404']);
+          }
+        });
+      this.themoviedbService.getTrailerMovieById(movieId)
+        .subscribe({
+          next: value => {
+            if (value) {
+              this.videoMovies = value;
+            }
+          },
+          error: err => {
+            console.log("getTrailerMovieById: " + err);
+            this.router.navigate(['404']);
+          }
+        });
     });
   }
 
-  loadDetailMovie(movie_id: string):void {
-    if(!this.loading){
+  loadDetailMovie(movie_id: string): void {
+    if (!this.loading) {
       this.loading = true;
       this.themoviedbService.getMovieDetail(movie_id).pipe(
         first()
@@ -69,28 +96,30 @@ export class MovieDetailComponent implements OnInit {
           this.loading = false;
         },
         error: error => {
+          console.log("loadDetailMovie:" + error);
           this.loading = false;
+          this.router.navigate(['404']);
         }
       })
     }
   }
 
-  goBack():void {
+  goBack(): void {
     window.history.back();
   }
 
-  openYoutubeDialog():void {
+  openYoutubeDialog(): void {
     this.dialog.open(YoutubeDialogComponent, {
-      data: { videoId: this.videoMovies.key },
+      data: {videoId: this.videoMovies.key},
     });
   }
 
-  previousCastItems():void {
+  previousCastItems(): void {
     const container = document.getElementById("castItemsContainer");
     container!.scrollLeft -= 50;
   }
 
-  nextCastItems():void {
+  nextCastItems(): void {
     const container = document.getElementById("castItemsContainer");
     container!.scrollLeft += 50;
   }

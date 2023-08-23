@@ -79,12 +79,11 @@ export class ThemoviedbService {
           if (response.body.page >= response.body.total_pages) {
             this.searchParams.page = response.body.total_pages;
             this.searchParams.isLastPage = true;
-          }else {
+          } else {
             this.searchParams.isLastPage = false;
           }
           return response.body
         } else {
-          this.spinner.hide();
           throw new Error('Response body is null.');
         }
       })

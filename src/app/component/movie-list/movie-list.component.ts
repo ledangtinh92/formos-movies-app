@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IMovie} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
@@ -63,6 +63,7 @@ export class MovieListComponent implements OnInit {
           }
         }
       }, error: error => {
+        console.log(error);
         this.spinner.hide();
       }
     });

@@ -3,7 +3,7 @@ import {ApplicationConfigService} from "src/app/config/application-config.servic
 import {ThemoviedbService} from "src/app/service/themoviedb-service";
 import {IMovie} from "src/app/model/movies.model";
 import {BackdropSizesEnums} from "src/app/enums/image.model";
-import {NgbCarouselConfig, NgbCarouselModule} from "@ng-bootstrap/ng-bootstrap";
+import {NgbCarouselConfig,} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit {
     config.interval = 2000;
     config.keyboard = true;
     config.pauseOnHover = true;
-
   }
 
   ngOnInit(): void {

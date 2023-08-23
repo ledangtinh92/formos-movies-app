@@ -1,3 +1,4 @@
+<router-outlet name="error"></router-outlet>
 <div app-theme class="container-main">
   <div class="container-fluid">
     <div class="row">
@@ -7,11 +8,13 @@
             <app-navbar-right></app-navbar-right>
           </mat-drawer>
           <mat-drawer-content class="example-sidenav-content">
-            <div class="container-fluid p-0">
+            <div class="container-fluid p-0" id="container-nav-top">
               <app-navbar-top (menuToggleDrawer)="this.toggleDrawer()" ></app-navbar-top>
+            </div>
+            <div class="container-fluid p-0" id="container-body">
               <router-outlet class="container-body"></router-outlet>
             </div>
-            <div class="container-fluid">
+            <div class="container-fluid" id="container-footer">
               <app-footer></app-footer>
             </div>
           </mat-drawer-content>

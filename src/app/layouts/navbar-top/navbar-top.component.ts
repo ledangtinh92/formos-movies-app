@@ -4,7 +4,7 @@ import {ThemoviedbService} from "src/app/service/themoviedb-service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {LocalStorageService} from "ngx-webstorage";
 import {ThemeService} from "../../shared/themes/themes.service";
-import {THEMES_ACTIVE} from "../../constant/storage.constant";
+import {THEMES_ACTIVE, THEMES_DARK, THEMES_LIGHT} from "../../constant/storage.constant";
 import {SearchModel} from "../../model/search.model";
 
 @Component({
@@ -19,7 +19,7 @@ export class NavbarTopComponent implements OnInit {
   iconText = 'menu';
   @Output() menuToggleDrawer = new EventEmitter<string>();
   themeSelect!: boolean;
-  searchPamra! : SearchModel;
+  searchPamra!: SearchModel;
 
   constructor(
     private router: Router,
@@ -49,29 +49,32 @@ export class NavbarTopComponent implements OnInit {
     this.searchPamra = this.themoviedbService.searchParams;
     this.themoviedbService.getSearchParamData().subscribe(value => {
       this.searchQuery = value.search;
+      if (this.searchQuery.trim() == '') {
+        this.isSearchExpanded = false;
+      }
     })
 
     const themeActive = this.storage.retrieve(THEMES_ACTIVE)
-    if(themeActive){
+    if (themeActive) {
       this.themeService.setTheme(themeActive.name);
-      if (themeActive.name === 'light') {
+      if (themeActive.name === THEMES_LIGHT) {
         this.themeSelect = false;
       } else {
         this.themeSelect = true;
       }
-    }else {
-      this.storage.store(THEMES_ACTIVE,this.themeService.getActiveTheme());
+    } else {
+      this.storage.store(THEMES_ACTIVE, this.themeService.getActiveTheme());
     }
   }
 
   toggle(): void {
     const active = this.themeService.getActiveTheme();
-    if (active.name === 'light') {
-      this.themeService.setTheme('dark');
+    if (active.name === THEMES_LIGHT) {
+      this.themeService.setTheme(THEMES_DARK);
     } else {
-      this.themeService.setTheme('light');
+      this.themeService.setTheme(THEMES_LIGHT);
     }
-    this.storage.store(THEMES_ACTIVE,this.themeService.getActiveTheme());
+    this.storage.store(THEMES_ACTIVE, this.themeService.getActiveTheme());
   }
 
   onBlur(): void {
@@ -84,10 +87,7 @@ export class NavbarTopComponent implements OnInit {
     if (this.searchQueryOld != this.searchQuery) {
       this.spinner.show();
       this.searchQueryOld = this.searchQuery;
-      this.themoviedbService.searchParams.search = this.searchQueryOld;
-      this.themoviedbService.searchParams.type = '';
-      this.themoviedbService.searchParams.page = 0;
-      this.themoviedbService.searchParams.genres = [];
+      this.themoviedbService.searchParams.setSearch(this.searchQueryOld);
       this.themoviedbService.sendSearchParam();
       this.themoviedbService.getMovieList().subscribe({
         next: result => {
@@ -96,7 +96,8 @@ export class NavbarTopComponent implements OnInit {
             this.themoviedbService.sendMoviesData(result.results)
           }
         },
-        error:err => {
+        error: err => {
+          console.log(err);
           this.spinner.hide();
         }
       });
@@ -104,11 +105,8 @@ export class NavbarTopComponent implements OnInit {
     }
   }
 
-  clickHomeMenu():void {
-    this.themoviedbService.searchParams.search = '';
-    this.themoviedbService.searchParams.type = '';
-    this.themoviedbService.searchParams.page = 0;
-    this.themoviedbService.searchParams.genres = [];
+  clickHomeMenu(): void {
+    this.themoviedbService.searchParams.clear();
     this.themoviedbService.sendSearchParam();
     this.router.navigate(['/']);
   }

@@ -18,4 +18,36 @@ export class SearchModel {
   getNextPage(): number {
     return this.page + 1;
   }
+
+  setType(type: string): void {
+    this.type = type;
+    this.page = 0;
+    this.genres = [];
+    this.search = '';
+    this.isLastPage = false;
+  }
+
+  setGenres(genres: IGenres[]): void {
+    this.type = '';
+    this.page = 0;
+    this.genres = genres;
+    this.search = '';
+    this.isLastPage = false;
+  }
+
+  setSearch(search: string): void {
+    this.type = '';
+    this.page = 0;
+    this.genres = [];
+    this.search = search;
+    this.isLastPage = false;
+  }
+
+  clear():void{
+    this.type = '';
+    this.page = 0;
+    this.genres = [];
+    this.search = '';
+    this.isLastPage = false;
+  }
 }

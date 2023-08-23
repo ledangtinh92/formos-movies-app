@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {navbarTopRoute} from "./layouts/navbar-top/navbar-top.route";
 import {navbarRightRoute} from "./layouts/navbar-right/navbar-right.route";
 import {HomeComponent} from "./component/home/home.component";
+import {errorRoute} from "./layouts/error/error.route";
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
     path: 'actor/:id/detail',
     loadChildren: () => import('./component/actor-detail/actor-detail.module').then(m => m.ActorDetailModule),
   },
-  navbarTopRoute,navbarRightRoute
+  navbarTopRoute,navbarRightRoute,...errorRoute
 ];
 
 @NgModule({

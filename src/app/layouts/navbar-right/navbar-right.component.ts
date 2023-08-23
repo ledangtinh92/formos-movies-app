@@ -44,10 +44,11 @@ export class NavbarRightComponent implements OnInit {
   onCheckboxChange(): void {
     this.spinner.show();
     this.selectedGenres = this.genres.filter(genre => genre.checked);
-    this.themoviedbService.searchParams.genres = this.selectedGenres;
-    this.themoviedbService.searchParams.type = '';
-    this.themoviedbService.searchParams.search ='';
-    this.themoviedbService.searchParams.page = 0;
+    // this.themoviedbService.searchParams.genres = this.selectedGenres;
+    // this.themoviedbService.searchParams.type = '';
+    // this.themoviedbService.searchParams.search ='';
+    // this.themoviedbService.searchParams.page = 0;
+    this.themoviedbService.searchParams.setGenres(this.selectedGenres);
     this.themoviedbService.sendSearchParam();
     this.themoviedbService.getMovieList().subscribe({
       next: result => {
@@ -57,6 +58,7 @@ export class NavbarRightComponent implements OnInit {
         this.spinner.hide();
       },
       error:err => {
+        console.log(err);
         this.spinner.hide();
       }
     });
@@ -65,10 +67,11 @@ export class NavbarRightComponent implements OnInit {
 
   routerlinkDiscover(POPULAR: DiscoverType) {
     this.spinner.show();
-    this.themoviedbService.searchParams.type = POPULAR;
-    this.themoviedbService.searchParams.page = 0;
-    this.themoviedbService.searchParams.search ='';
-    this.themoviedbService.searchParams.genres = [];
+    // this.themoviedbService.searchParams.type = POPULAR;
+    // this.themoviedbService.searchParams.page = 0;
+    // this.themoviedbService.searchParams.search ='';
+    // this.themoviedbService.searchParams.genres = [];
+    this.themoviedbService.searchParams.setType(POPULAR);
     this.genres.forEach(item => item.checked = false);
     this.themoviedbService.sendSearchParam();
     this.themoviedbService.getMovieList().subscribe({
@@ -79,6 +82,7 @@ export class NavbarRightComponent implements OnInit {
         this.spinner.hide();
       },
       error:err => {
+        console.log(err);
         this.spinner.hide();
       }
     });

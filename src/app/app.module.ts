@@ -25,10 +25,11 @@ import { HomeComponent } from './component/home/home.component';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxWebstorageModule} from "ngx-webstorage";
+import {ErrorComponent} from "./layouts/error/error.component";
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, NavbarTopComponent, NavbarRightComponent, ScrollTrackerDirective, HomeComponent
+    AppComponent, FooterComponent, ErrorComponent, NavbarTopComponent, NavbarRightComponent, ScrollTrackerDirective, HomeComponent
   ],
   imports: [
     HttpClientModule,
