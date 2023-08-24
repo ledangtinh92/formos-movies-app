@@ -1,4 +1,4 @@
-<div class="container-fluid container-body theme-main-color">
+<div class="container-fluid container-body theme-main-color" appScrollTracker (scrolledToBottom)="loadMoreData()">
   <div class="row category-title mt-4 mb-1" *ngIf="this.typeLoad">
     <span >{{this.typeLoad | uppercase}}</span>
     <p>CATEGORY</p>

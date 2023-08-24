@@ -1,19 +1,22 @@
-import { Directive, Output, EventEmitter, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Output, EventEmitter } from '@angular/core';
 
 @Directive({
-  selector: '[scrollTracker]'
+  selector: '[appScrollTracker]'
 })
 export class ScrollTrackerDirective {
-  @Output() scrollingFinished = new EventEmitter<void>();
+  @Output() scrolledToBottom = new EventEmitter();
 
-  @HostListener("window:scroll", [])
-  onScroll(): void {
-    //console.log("window.innerHeight " + window.innerHeight);
-    //console.log("window.scrollY " + window.scrollY);
+  constructor(private el: ElementRef) {}
 
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      this.scrollingFinished.emit();
-    } else if ((window.innerHeight + window.scrollY) < document.body.offsetHeight) {
+  @HostListener('scroll', ['$event'])
+  onScroll(event: any) {
+    const target = event.target;
+    const scrollPosition = target.scrollHeight - target.clientHeight - target.scrollTop;
+    const threshold = 100;
+
+    console.log(target);
+    if (scrollPosition <= threshold) {
+      this.scrolledToBottom.emit();
     }
   }
 }

@@ -33,6 +33,11 @@
       "@shared/*": ["app/shared/*"],
     }
   },
+//  "include": [
+//    "src/**/*.ts",
+//    "src/polyfills.ts",
+//  ],
+  "exclude": ["node_modules"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

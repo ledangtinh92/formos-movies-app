@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IGenres} from "../../model/genre.model";
-import {DiscoverType} from "../../enums/discover.type.model";
+import {DiscoverType} from "../../enums/discover.type.enums";
 import {Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
 
@@ -26,66 +26,35 @@ export class NavbarRightComponent implements OnInit {
       {
         next: value => {
           if (value) {
-            this.genres = value.map(genre => ({ ...genre, checked: false }));
+            this.genres = value.map(genre => ({...genre, checked: false}));
           }
         },
         error: err => {
-
+          console.log("NavbarRightComponent ngOnInit: " + err);
         }
       }
     )
     this.themoviedbService.getSearchParamData().subscribe(value => {
-      if(value.genres.length == 0 && this.genres.length >0) {
-        this.genres.forEach(genre =>genre.checked = false);
+      if (value.genres.length == 0 && this.genres.length > 0) {
+        this.genres.forEach(genre => genre.checked = false);
       }
     });
   }
 
   onCheckboxChange(): void {
-    this.spinner.show();
     this.selectedGenres = this.genres.filter(genre => genre.checked);
-    // this.themoviedbService.searchParams.genres = this.selectedGenres;
-    // this.themoviedbService.searchParams.type = '';
-    // this.themoviedbService.searchParams.search ='';
-    // this.themoviedbService.searchParams.page = 0;
     this.themoviedbService.searchParams.setGenres(this.selectedGenres);
     this.themoviedbService.sendSearchParam();
-    this.themoviedbService.getMovieList().subscribe({
-      next: result => {
-        if (result) {
-          this.themoviedbService.sendMoviesData(result.results)
-        }
-        this.spinner.hide();
-      },
-      error:err => {
-        console.log(err);
-        this.spinner.hide();
-      }
-    });
-    this.router.navigate(['/movie']);
+    const selectedGenresList = this.selectedGenres.map(genred => genred.name?.toLowerCase()).join(',');
+    this.router.navigate(['/movies/' + DiscoverType.GENRES], {queryParams: {list: selectedGenresList}});
   }
 
   routerlinkDiscover(POPULAR: DiscoverType) {
     this.spinner.show();
-    // this.themoviedbService.searchParams.type = POPULAR;
-    // this.themoviedbService.searchParams.page = 0;
-    // this.themoviedbService.searchParams.search ='';
-    // this.themoviedbService.searchParams.genres = [];
     this.themoviedbService.searchParams.setType(POPULAR);
     this.genres.forEach(item => item.checked = false);
     this.themoviedbService.sendSearchParam();
-    this.themoviedbService.getMovieList().subscribe({
-      next: result => {
-        if (result) {
-          this.themoviedbService.sendMoviesData(result.results)
-        }
-        this.spinner.hide();
-      },
-      error:err => {
-        console.log(err);
-        this.spinner.hide();
-      }
-    });
-    this.router.navigate(['/movie']);
+
+    this.router.navigate(['/movies/' + POPULAR]);
   }
 }

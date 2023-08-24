@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map, Observable, Subject} from 'rxjs';
+import {finalize, map, Observable, Subject} from 'rxjs';
 import {ApplicationConfigService} from "../config/application-config.service";
 import {IGenres} from "../model/genre.model";
 import {IPage} from "../model/page.model";
 import {IMovie, IMovieDetail} from "../model/movies.model";
 import {SearchModel} from "../model/search.model";
-import {DiscoverType} from "../enums/discover.type.model";
+import {DiscoverType} from "../enums/discover.type.enums";
 import {DateService} from "../core/util/date-util.service";
 import {ICast} from "../model/cast.model";
 import {IPersonModel} from "../model/person.model";
@@ -44,7 +44,8 @@ export class ThemoviedbService {
   }
 
   getMovieList(): Observable<IPage> {
-    let url = '/discover/movie/';
+    this.spinner.show();
+    let url = '/discover/movie';
     let options: HttpParams = new HttpParams();
     options = options.set('include_adult', false);
     options = options.set('language', 'en-US');
@@ -87,6 +88,9 @@ export class ThemoviedbService {
           throw new Error('Response body is null.');
         }
       })
+      ,finalize(() => {
+      this.spinner.hide();
+    })
     );
   }
 
@@ -193,6 +197,23 @@ export class ThemoviedbService {
           const trailerMovie = response.body.results
             .find(item => item.key && item.type && 'Trailer' == item.type && item.site == 'YouTube')
           return trailerMovie;
+        } else {
+          throw new Error('Response body is null.');
+        }
+      })
+    );
+  }
+
+  getPopularPeopleLst():Observable<IPersonModel[]> {
+    let options: HttpParams = new HttpParams();
+    options = options.append('language', 'en-US');
+    return this.http.get<{ results: IPersonModel[]}>(`${this.resourceUrl}/person/popular`, {
+      params: options,
+      observe: 'response'
+    }).pipe(
+      map(response => {
+        if (response.body !== null) {
+          return response.body.results;
         } else {
           throw new Error('Response body is null.');
         }

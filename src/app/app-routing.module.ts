@@ -11,7 +11,11 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'movie',
+    path: 'movies/:type',
+    loadChildren: () => import('./component/movie-list/movie-list.module').then(m => m.MovieListModule),
+  },
+  {
+    path: 'movies/:type/:list',
     loadChildren: () => import('./component/movie-list/movie-list.module').then(m => m.MovieListModule),
   },
   {

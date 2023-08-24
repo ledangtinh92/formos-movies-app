@@ -1,33 +1,33 @@
 <div class="container-fluid container-body theme-main-color">
-  <div class="row justify-content-center" *ngIf="this.porsonInfo">
+  <div class="row justify-content-center" *ngIf="this.personInfo">
     <div class="col-3">
-      <img class="float-end" src="{{this.imageUrl + this.porsonInfo.profile_path}}">
+      <img class="float-end" *ngIf="this.personInfo.profile_path" [src]="this.personInfo.profile_path | imageUrl:ProfileSizesEnums.H632">
     </div>
     <div class="col-4">
       <div class="row actor-detail-title">
-        <span> {{this.porsonInfo.name | uppercase }}</span>
+        <span> {{this.personInfo.name | uppercase }}</span>
         <p>
-          {{this.porsonInfo.birthday }}
-          {{this.porsonInfo.deathday }}
+          {{this.personInfo.birthday }}
+          {{this.personInfo.deathday }}
         </p>
       </div>
       <div class="row mt-3">
         <span class="title">THE BIOGRAPHY</span>
       </div>
       <div class="row">
-        <span class="biography">{{this.porsonInfo.biography}}</span>
+        <span class="biography">{{this.personInfo.biography}}</span>
       </div>
       <div class="row justify-content-between mt-3">
         <div class="col-6">
-          <a *ngIf="this.porsonInfo.imdb_id" class="btn btn-outline-success d-inline-flex align-items-center me-3"
-             href="{{'https://www.imdb.com/name/'+ this.porsonInfo.imdb_id}}" target="_blank">
+          <a *ngIf="this.personInfo.imdb_id" class="btn btn-outline-success d-inline-flex align-items-center me-3"
+             href="{{'https://www.imdb.com/name/'+ this.personInfo.imdb_id}}" target="_blank">
             <span>IMDB</span>
             <span class="material-icons">local_movies</span>
           </a>
         </div>
         <div class="col-6">
-          <button class="btn btn-success d-flex align-items-center float-end">
-            <span class="material-icons" (click)="goBack()">arrow_back</span>
+          <button class="btn btn-success d-flex align-items-center float-end" (click)="goActorBack()">
+            <span class="material-icons">arrow_back</span>
             <span>Back</span>
           </button>
         </div>
@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <div class="row actor-detail-title" *ngIf="this.porsonInfo">
-    <h1 class="mb-0">{{this.porsonInfo.name | uppercase }} <span>IN</span></h1>
+  <div class="row actor-detail-title" *ngIf="this.personInfo && this.personMovieLst && this.personMovieLst.length > 0">
+    <h1 class="mb-0">{{this.personInfo.name | uppercase }} <span>IN</span></h1>
     <p class="title">MOVIES</p>
   </div>
   <div class="row">
@@ -51,32 +51,7 @@
       </select>
     </div>
   </div>
-
-  <div class="row align-items-center" *ngIf="this.personMovisLst">
-    <div class="col-1 pe-0 text-center"><span class="material-icons" (click)="previousPersonMoviesItems()"> keyboard_double_arrow_left </span>
-    </div>
-    <div class="col-10">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <div class="person-movies-items" id="castPersonMoviesContainer">
-            <ng-container *ngFor="let personMovis of this.personMovisLst">
-              <ng-container *ngIf="personMovis.poster_path">
-                <div class="card item-movie p-1 ms-1">
-                  <img class="card-img-top" [routerLink]="['/movie',personMovis.id,'detail']"
-                       src="{{this.imageUrl + personMovis.poster_path}}">
-                  <div class="card-body text-center">
-                    <h5 class="card-title">{{personMovis.title}}</h5>
-                  </div>
-                </div>
-              </ng-container>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-1 text-center"><span class="material-icons" (click)="nextPersonMoviesItems()"> keyboard_double_arrow_right </span>
-    </div>
-  </div>
+  <app-image-slider [items]="this.personMovieImageLst" [isShowButton] = "true" [scrollWidth]="150"></app-image-slider>
 </div>
 
 

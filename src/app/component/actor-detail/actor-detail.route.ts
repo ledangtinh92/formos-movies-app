@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {ActorDetailComponent} from "./actor-detail.component";
 
-export const movieDetailState: Routes = [
+export const actorDetailState: Routes = [
   {
     path: '',
     component: ActorDetailComponent,

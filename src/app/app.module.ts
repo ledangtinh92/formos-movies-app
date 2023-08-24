@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from 'src/app/layouts/main/app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from 'src/app/layouts/main/app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FooterComponent} from "src/app/layouts/footer/footer.component";
 import {NavbarTopComponent} from "./layouts/navbar-top/navbar-top.component";
 import {SharedLibsModule} from "./shared/shared-libs.module";
@@ -21,11 +21,12 @@ import {httpInterceptorProviders} from "./core/interceptor";
 import {HttpClientModule} from "@angular/common/http";
 import {NgbCarouselModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ScrollTrackerDirective} from "./shared/directive/scroll-tracker.directive";
-import { HomeComponent } from './component/home/home.component';
+import {HomeComponent} from './component/home/home.component';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxWebstorageModule} from "ngx-webstorage";
 import {ErrorComponent} from "./layouts/error/error.component";
+import {ImageSliderModule} from "./shared/image-slider/image-slider.module";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import {ErrorComponent} from "./layouts/error/error.component";
     AppRoutingModule,
     BrowserAnimationsModule,
     MatSidenavModule, MatButtonModule, MatCheckboxModule,
-    SharedLibsModule,NgbCarouselModule,
+    SharedLibsModule, NgbCarouselModule,
     ThemeModule.forRoot({
       themes: [lightTheme, darkTheme],
       active: 'light'
@@ -46,6 +47,7 @@ import {ErrorComponent} from "./layouts/error/error.component";
     NgbModule,
     NgxSpinnerModule,
     MatDialogModule,
+    ImageSliderModule
   ],
   providers: [ThemeService, httpInterceptorProviders],
   bootstrap: [AppComponent]

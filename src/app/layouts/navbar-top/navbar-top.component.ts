@@ -89,19 +89,7 @@ export class NavbarTopComponent implements OnInit {
       this.searchQueryOld = this.searchQuery;
       this.themoviedbService.searchParams.setSearch(this.searchQueryOld);
       this.themoviedbService.sendSearchParam();
-      this.themoviedbService.getMovieList().subscribe({
-        next: result => {
-          this.spinner.hide();
-          if (result) {
-            this.themoviedbService.sendMoviesData(result.results)
-          }
-        },
-        error: err => {
-          console.log(err);
-          this.spinner.hide();
-        }
-      });
-      this.router.navigate(['/movie']);
+      this.router.navigate(['/movies/search']);
     }
   }
 

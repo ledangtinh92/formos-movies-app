@@ -1,27 +1,27 @@
 import {Component, Input} from '@angular/core';
+import {ImageSliderModel} from "./image-slider.model";
 
 @Component({
-  standalone: true,
   selector: 'app-image-slider',
   templateUrl: './image-slider.component.html',
-  styleUrls: ['./image-slider.component.css']
+  styleUrls: ['./image-slider.component.scss']
 })
 export class ImageSliderComponent {
-  @Input() imageInput =[]
-  images: string[] = [];
-  currentIndex: number = 0;
+  @Input() items: ImageSliderModel[] = [];
+  @Input() isShowButton: boolean = false;
+  @Input() scrollWidth: number = 10;
 
-  constructor() {
-    for (let i = 1; i <= 30; i++) {
-      this.images.push(`image${i}.jpg`);
+  previousItems():void {
+    if (this.isShowButton) {
+      let container = document.getElementById("containerItems");
+      container!.scrollLeft -= this.scrollWidth;
     }
   }
 
-  slide(direction: 'next' | 'prev') {
-    if (direction === 'next') {
-      this.currentIndex = Math.min(this.currentIndex + 10, this.images.length - 10);
-    } else if (direction === 'prev') {
-      this.currentIndex = Math.max(this.currentIndex - 10, 0);
+  nextItems():void {
+    if (this.isShowButton) {
+      let container = document.getElementById("containerItems");
+      container!.scrollLeft += this.scrollWidth;
     }
   }
 }

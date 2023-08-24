@@ -6,10 +6,12 @@ import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {first} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ICast} from "../../model/cast.model";
-import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.model";
+import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.quality.enums";
 import {IVideoModel} from "src/app/model/video.model";
 import {MatDialog} from "@angular/material/dialog";
 import {YoutubeDialogComponent} from "src/app/shared/youtube-dialog/youtube-dialog.component";
+import {ImageSliderModel} from "../../shared/image-slider/image-slider.model";
+import {IPersonModel} from "../../model/person.model";
 
 @Component({
   selector: 'app-movie-detail',
@@ -25,6 +27,7 @@ export class MovieDetailComponent implements OnInit {
   listCast: ICast[] = [];
   recommendationLst: IMovie[] = [];
   videoMovies!: IVideoModel;
+  recommendationImageLst: ImageSliderModel[]=[];
 
   constructor(private themoviedbService: ThemoviedbService,
               private applicationConfigService: ApplicationConfigService,
@@ -61,8 +64,16 @@ export class MovieDetailComponent implements OnInit {
       this.themoviedbService.getMovieRecommendation(movieId, 1)
         .subscribe({
           next: value => {
-            if (value) {
+            if (value && value.results) {
               this.recommendationLst = value.results as IMovie[];
+              this.recommendationImageLst = this.recommendationLst.filter((item: IMovie) =>item.poster_path).map((recommentItem: IMovie)=>{
+                return {
+                  imageUrl: recommentItem.poster_path,
+                  title: recommentItem.title,
+                  routerLink: '/movie'+ recommentItem.id + 'detail',
+                  quality: PosterSizesEnums.W342
+                } as ImageSliderModel
+              })
             }
           },
           error: err => {
@@ -115,22 +126,16 @@ export class MovieDetailComponent implements OnInit {
   }
 
   previousCastItems(): void {
-    const container = document.getElementById("castItemsContainer");
+    let container = document.getElementById("castItemsContainer");
     container!.scrollLeft -= 50;
   }
 
   nextCastItems(): void {
-    const container = document.getElementById("castItemsContainer");
+    let container = document.getElementById("castItemsContainer");
     container!.scrollLeft += 50;
   }
 
-  previousMoviesRecommendedItems() {
-    const container = document.getElementById("castMoviesRecommendedContainer");
-    container!.scrollLeft -= 150;
-  }
-
-  nextMoviesRecommendedItems() {
-    const container = document.getElementById("castMoviesRecommendedContainer");
-    container!.scrollLeft += 150;
+  loadMoreData() {
+    alert("scroll bottom!")
   }
 }

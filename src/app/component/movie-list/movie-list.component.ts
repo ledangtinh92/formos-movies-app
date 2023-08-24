@@ -4,9 +4,10 @@ import {IMovie} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {CdkVirtualScrollViewport} from "@angular/cdk/scrolling";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
-import {PosterSizesEnums} from "../../enums/image.model";
+import {PosterSizesEnums} from "../../enums/image.quality.enums";
+import {DiscoverType} from "../../enums/discover.type.enums";
 
 @Component({
   selector: 'app-home',
@@ -26,7 +27,8 @@ export class MovieListComponent implements OnInit {
               private applicationConfigService: ApplicationConfigService,
               private config: NgbRatingConfig,
               private spinner: NgxSpinnerService,
-              private activeRoute: ActivatedRoute) {
+              private activeRoute: ActivatedRoute,
+              private router: Router,) {
     this.moviesLst = []
     this.imageUrl = this.applicationConfigService.getEndpointImage(PosterSizesEnums.W500);
     this.config.max = 5;
@@ -35,6 +37,42 @@ export class MovieListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activeRoute.queryParams.subscribe(params => {
+      this.themoviedbService.getMovieList().subscribe({
+        next: result => {
+          if (result) {
+            this.themoviedbService.sendMoviesData(result.results)
+          }
+        },
+        error:():void => {
+          this.router.navigate(['404']);
+        }
+      });
+    });
+    this.activeRoute.params.subscribe(params => {
+      const typeSearch = params['type'];
+      switch (typeSearch) {
+        case DiscoverType.POPULAR:
+        case DiscoverType.UPCOMING:
+        case DiscoverType.TOP_RATED:
+        case DiscoverType.GENRES:
+        case DiscoverType.SEARCH:
+          this.themoviedbService.getMovieList().subscribe({
+            next: result => {
+              if (result) {
+                this.themoviedbService.sendMoviesData(result.results)
+              }
+            },
+            error:():void => {
+              this.router.navigate(['404']);
+            }
+          });
+          break;
+        default:
+          this.router.navigate(['404']);
+          break;
+      }
+    });
     this.themoviedbService.getMoviesData().subscribe(data => {
       if(data) {
         this.moviesLst = data;
@@ -63,7 +101,7 @@ export class MovieListComponent implements OnInit {
           }
         }
       }, error: error => {
-        console.log(error);
+        console.log("loadMoreData: " + error);
         this.spinner.hide();
       }
     });
