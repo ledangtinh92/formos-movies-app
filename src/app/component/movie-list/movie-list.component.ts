@@ -44,9 +44,6 @@ export class MovieListComponent implements OnInit {
           if (result) {
             this.themoviedbService.sendMoviesData(result.results)
           }
-        },
-        error:():void => {
-          this.router.navigate(['404']);
         }
       });
     });
@@ -64,9 +61,6 @@ export class MovieListComponent implements OnInit {
               if (result) {
                 this.themoviedbService.sendMoviesData(result.results)
               }
-            },
-            error:():void => {
-              this.router.navigate(['404']);
             }
           });
           break;
@@ -102,9 +96,6 @@ export class MovieListComponent implements OnInit {
             this.moviesLst.push(...result.results as IMovie[]);
           }
         }
-      }, error: error => {
-        console.log("loadMoreData: " + error);
-        this.spinner.hide();
       }
     });
   }

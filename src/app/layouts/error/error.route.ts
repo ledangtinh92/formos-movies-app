@@ -4,18 +4,18 @@ import { ErrorComponent } from './error.component';
 
 export const errorRoute: Routes = [
   {
-    path: 'error',
+    path: 'error/:error',
     component: ErrorComponent,
     data: {
-      pageTitle: 'error.title',
+      errorTitle: 'Page not found',
     },
   },
   {
     path: '404',
     component: ErrorComponent,
     data: {
-      pageTitle: 'error.title',
-      errorMessage: 'error.http.404',
+      errorTitle: 'Page not found',
+      errorMessage: 'The page you’re looking for doesn’t exist.',
     },
   },
   {

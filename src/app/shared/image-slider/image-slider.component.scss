@@ -3,6 +3,7 @@
   display: grid;
   grid-auto-flow: column;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 & .item{
     width: 10rem;
     cursor: pointer;
@@ -12,5 +13,14 @@
 & .card-title{
     font-weight: 500;
     color: rgba(101,102,98,0.77);
+  }
+}
+
+.items-content .card:hover {
+  & img {
+    transform: scale(1.1);
+  }
+  & .card-title {
+    transform: scale(1.2);
   }
 }

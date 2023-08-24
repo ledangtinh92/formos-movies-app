@@ -42,10 +42,6 @@ export class ActorDetailComponent implements OnInit {
           if (value) {
             this.personInfo = value;
           }
-        },
-        error: err => {
-          console.log("getActorInfo: " + err);
-          this.router.navigate(['404']);
         }
       });
       this.themoviedbService.getPersonMoviesLst(personId)
@@ -54,10 +50,6 @@ export class ActorDetailComponent implements OnInit {
             this.personMovieLst = value;
             this.personMovieLst = this.personMovieLst.sort((a, b) => a.popularity - b.popularity)
             this.getPersonMovieImageLst();
-          },
-          error: err => {
-            console.log("getPersonMoviesLst: " + err);
-            this.router.navigate(['404']);
           }
         });
     });
@@ -95,7 +87,7 @@ export class ActorDetailComponent implements OnInit {
       return {
         imageUrl: movies.poster_path,
         title: movies.title,
-        routerLink: '/movie' + movies.id + 'detail',
+        routerLink: '/movie/' + movies.id + '/detail',
         quality: PosterSizesEnums.W500,
       } as ImageSliderModel
     })

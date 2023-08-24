@@ -1,7 +1,11 @@
 <div class="row justify-content-center">
   <div class="col-12">
     <div class="row align-items-center" *ngIf="this.items && this.items.length > 0">
-      <div *ngIf="isShowButton" class="col-1 pe-0 text-center"><span class="material-icons" (click)="previousItems()"> keyboard_double_arrow_left </span>
+      <div *ngIf="isShowButton" class="col-1 pe-0 text-center">
+        <span class="material-icons"
+              (mouseleave)="stopScrolling()"
+              (mouseenter)="startScrolling('prev')"
+              (click)="previousItems()"> keyboard_double_arrow_left </span>
       </div>
       <div [ngClass]="isShowButton ? 'col-10': 'col'">
         <div class="row justify-content-center">
@@ -10,8 +14,6 @@
               <ng-container *ngFor="let item of this.items">
                 <ng-container *ngIf="item">
                   <div class="card item p-1 ms-1">
-<!--                    <img class="card-img-top" [routerLink]="item.routerLink"-->
-<!--                         src="{{item.imageUrl}}">-->
                     <img class="card-img-top" [routerLink]="item.routerLink"
                          [src]="item.imageUrl | imageUrl:item.quality">
                     <div class="card-body text-center">
@@ -24,7 +26,11 @@
           </div>
         </div>
       </div>
-      <div *ngIf="isShowButton" class="col-1 text-center"><span class="material-icons" (click)="nextItems()"> keyboard_double_arrow_right </span>
+      <div *ngIf="isShowButton" class="col-1 text-center">
+        <span class="material-icons"
+              (mouseleave)="stopScrolling()"
+              (mouseenter)="startScrolling('next')"
+              (click)="nextItems()"> keyboard_double_arrow_right </span>
       </div>
     </div>
   </div>

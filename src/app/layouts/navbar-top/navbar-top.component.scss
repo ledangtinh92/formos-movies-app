@@ -43,14 +43,16 @@
   cursor: pointer;
 }
 
-.search-input {
+.search-bar .input-group {
   display: none;
   transition: width 0.3s;
 }
 
-.search-input.expanded {
-  display: block;
-  width: 300px;
+.search-bar .input-group.expanded {
+  display: flex;
+  & .search-input{
+    width: 300px;
+  }
 }
 
 .circle {

@@ -88,9 +88,9 @@ export class ThemoviedbService {
           throw new Error('Response body is null.');
         }
       })
-      ,finalize(() => {
-      this.spinner.hide();
-    })
+      , finalize(() => {
+        this.spinner.hide();
+      })
     );
   }
 
@@ -106,15 +106,9 @@ export class ThemoviedbService {
     );
   }
 
-  getMovieDetail(movie_id: string): Observable<IMovieDetail> {
+  getMovieDetail(movie_id: string): Observable<IMovieDetail | undefined> {
     return this.http.get<IMovieDetail>(`${this.resourceUrl}/movie/${movie_id}`, {observe: 'response'}).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body ?? undefined)
     );
   }
 
@@ -122,17 +116,11 @@ export class ThemoviedbService {
     return this.http.get<{
       cast: ICast[]
     }>(`${this.resourceUrl}/movie/${movie_id}/credits`, {observe: 'response'}).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body.cast;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body?.cast ?? [])
     );
   }
 
-  getMovieRecommendation(movie_id: string, page: number): Observable<IPage> {
+  getMovieRecommendation(movie_id: string, page: number): Observable<IPage | undefined> {
     let options: HttpParams = new HttpParams();
     options.append('language', 'en-US');
     options.append('page', page);
@@ -141,30 +129,18 @@ export class ThemoviedbService {
       params: options,
       observe: 'response'
     }).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body ?? undefined)
     );
   }
 
-  getActorInfo(person_id: string): Observable<IPersonModel> {
+  getActorInfo(person_id: string): Observable<IPersonModel | undefined> {
     let options: HttpParams = new HttpParams();
     options.append('language', 'en-US');
     return this.http.get<IPersonModel>(`${this.resourceUrl}/person/${person_id}`, {
       params: options,
       observe: 'response'
     }).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body ?? undefined)
     );
   }
 
@@ -175,13 +151,7 @@ export class ThemoviedbService {
       params: options,
       observe: 'response'
     }).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body.cast;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body?.cast ?? [])
     );
   }
 
@@ -198,26 +168,20 @@ export class ThemoviedbService {
             .find(item => item.key && item.type && 'Trailer' == item.type && item.site == 'YouTube')
           return trailerMovie;
         } else {
-          throw new Error('Response body is null.');
+          return undefined;
         }
       })
     );
   }
 
-  getPopularPeopleLst():Observable<IPersonModel[]> {
+  getPopularPeopleLst(): Observable<IPersonModel[] | undefined> {
     let options: HttpParams = new HttpParams();
     options = options.append('language', 'en-US');
-    return this.http.get<{ results: IPersonModel[]}>(`${this.resourceUrl}/person/popular`, {
+    return this.http.get<{ results: IPersonModel[] }>(`${this.resourceUrl}/person/popular`, {
       params: options,
       observe: 'response'
     }).pipe(
-      map(response => {
-        if (response.body !== null) {
-          return response.body.results;
-        } else {
-          throw new Error('Response body is null.');
-        }
-      })
+      map(response => response.body?.results ?? undefined)
     );
   }
 }

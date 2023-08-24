@@ -11,7 +11,6 @@ import {IVideoModel} from "src/app/model/video.model";
 import {MatDialog} from "@angular/material/dialog";
 import {YoutubeDialogComponent} from "src/app/shared/youtube-dialog/youtube-dialog.component";
 import {ImageSliderModel} from "../../shared/image-slider/image-slider.model";
-import {IPersonModel} from "../../model/person.model";
 
 @Component({
   selector: 'app-movie-detail',
@@ -55,10 +54,6 @@ export class MovieDetailComponent implements OnInit {
             if (value) {
               this.listCast = value;
             }
-          },
-          error: err => {
-            console.log("getMovieRecommendation: " + err);
-            this.router.navigate(['404']);
           }
         });
       this.themoviedbService.getMovieRecommendation(movieId, 1)
@@ -70,15 +65,11 @@ export class MovieDetailComponent implements OnInit {
                 return {
                   imageUrl: recommentItem.poster_path,
                   title: recommentItem.title,
-                  routerLink: '/movie'+ recommentItem.id + 'detail',
+                  routerLink: '/movie/'+ recommentItem.id + '/detail',
                   quality: PosterSizesEnums.W342
                 } as ImageSliderModel
               })
             }
-          },
-          error: err => {
-            console.log("getMovieRecommendation: " + err);
-            this.router.navigate(['404']);
           }
         });
       this.themoviedbService.getTrailerMovieById(movieId)
@@ -87,10 +78,6 @@ export class MovieDetailComponent implements OnInit {
             if (value) {
               this.videoMovies = value;
             }
-          },
-          error: err => {
-            console.log("getTrailerMovieById: " + err);
-            this.router.navigate(['404']);
           }
         });
     });
@@ -103,13 +90,10 @@ export class MovieDetailComponent implements OnInit {
         first()
       ).subscribe({
         next: value => {
-          this.moviesDetail = value;
           this.loading = false;
-        },
-        error: error => {
-          console.log("loadDetailMovie:" + error);
-          this.loading = false;
-          this.router.navigate(['404']);
+          if(value){
+            this.moviesDetail = value;
+          }
         }
       })
     }
@@ -133,9 +117,5 @@ export class MovieDetailComponent implements OnInit {
   nextCastItems(): void {
     let container = document.getElementById("castItemsContainer");
     container!.scrollLeft += 50;
-  }
-
-  loadMoreData() {
-    alert("scroll bottom!")
   }
 }
