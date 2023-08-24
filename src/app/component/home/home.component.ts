@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
           return {
             imageUrl: person.profile_path,
             title: person.name,
-            routerLink: '/actor'+ person.id + 'detail',
+            routerLink: '/actor/'+ person.id + '/detail',
             quality: ProfileSizesEnums.H632
           } as ImageSliderModel
         });

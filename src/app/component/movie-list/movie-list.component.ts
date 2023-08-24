@@ -38,6 +38,7 @@ export class MovieListComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeRoute.queryParams.subscribe(params => {
+      this.themoviedbService.searchParams.page = 0;
       this.themoviedbService.getMovieList().subscribe({
         next: result => {
           if (result) {
@@ -57,6 +58,7 @@ export class MovieListComponent implements OnInit {
         case DiscoverType.TOP_RATED:
         case DiscoverType.GENRES:
         case DiscoverType.SEARCH:
+          this.themoviedbService.searchParams.page = 0;
           this.themoviedbService.getMovieList().subscribe({
             next: result => {
               if (result) {
