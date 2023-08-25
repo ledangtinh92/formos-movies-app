@@ -61,6 +61,7 @@ export class ThemoviedbService {
       if (DiscoverTypeEnums.UPCOMING == this.searchParams.type) {
         options = options.set('sort_by', 'popularity.desc');
         options = options.set('with_release_type', '2|3');
+        // You can use the DatePipe from @angular/common. However, since you're learning Angular, it's a good idea to create a separate service for practice.
         options = options.set('release_date.gte', this.dateService.getCurrentDateFormatted());
       } else if (DiscoverTypeEnums.TOP_RATED == this.searchParams.type) {
         options = options.set('sort_by', 'vote_average.desc');
