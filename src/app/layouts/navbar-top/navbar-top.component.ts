@@ -19,7 +19,6 @@ export class NavbarTopComponent implements OnInit {
   searchQueryOld = '';
   isSearchExpanded = false;
   iconText = 'menu';
-
   themeSelect!: boolean;
   searchParam!: SearchModel;
 
