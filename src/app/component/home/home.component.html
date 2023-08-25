@@ -2,11 +2,11 @@
   <div class="row justify-content-center">
     <div class="col-5">
       <ngb-carousel *ngIf="this.nowPlayingMovies">
-        <ng-container *ngFor="let movieItem of this.nowPlayingMovies; index as i">
+        <ng-container *ngFor="let movieItem of this.nowPlayingMovies">
           <ng-container *ngIf="movieItem.backdrop_path">
             <ng-template ngbSlide>
               <div class="picsum-img-wrapper">
-                <img [src]="this.backdropPathUrl + movieItem.backdrop_path" alt="{{movieItem.title}}"/>
+                <img [src]="movieItem.backdrop_path | imageUrl:BackdropSizesEnums.W780" alt="{{movieItem.title}}" />
               </div>
               <div class="carousel-caption">
                 <h3>{{movieItem.title}}</h3>
@@ -18,5 +18,5 @@
       </ngb-carousel>
     </div>
   </div>
-  <app-image-slider [items]="this.poppulerPeople" [isShowButton] = "true" [scrollWidth]="150"></app-image-slider>
+  <app-image-slider [items]="this.popularPeopleImages" [isShowButton] = "true" [scrollWidth]="150"></app-image-slider>
 </div>

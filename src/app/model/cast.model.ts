@@ -1,4 +1,4 @@
-export interface ICast {
+export interface ICastModel {
   adult: string;
   gender?: number | null;
   id: number;

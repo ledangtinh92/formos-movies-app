@@ -52,6 +52,10 @@
   display: flex;
   & .search-input{
     width: 300px;
+    border-right: none;
+  }
+  & .input-group-text:hover span{
+    transform: scale(1.3);
   }
 }
 

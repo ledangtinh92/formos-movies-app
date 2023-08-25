@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from 'src/app/layouts/main/app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -41,9 +40,9 @@ import {ImageSliderModule} from "./shared/image-slider/image-slider.module";
     SharedLibsModule, NgbCarouselModule,
     ThemeModule.forRoot({
       themes: [lightTheme, darkTheme],
-      active: 'light'
+      active: lightTheme.name
     }),
-    NgxWebstorageModule.forRoot(),
+    NgxWebstorageModule.forRoot({ prefix: 'formos', separator: '-', caseSensitive: true }),
     NgbModule,
     NgxSpinnerModule,
     MatDialogModule,

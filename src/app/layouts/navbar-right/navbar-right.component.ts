@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IGenres} from "../../model/genre.model";
-import {DiscoverType} from "../../enums/discover.type.enums";
+import {IGenresModel} from "../../model/genre.model";
+import {DiscoverTypeEnums} from "../../enums/discover.type.enums";
 import {Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
 
@@ -11,14 +11,13 @@ import {NgxSpinnerService} from "ngx-spinner";
   styleUrls: ['./navbar-right.component.scss'],
 })
 export class NavbarRightComponent implements OnInit {
-  genres: IGenres[];
-  selectedGenres: IGenres[] = [];
-  discoverType = DiscoverType;
+  genres: IGenresModel[] = [];
+  selectedGenres: IGenresModel[] = [];
+  discoverType = DiscoverTypeEnums;
 
   constructor(private themoviedbService: ThemoviedbService,
               private router: Router,
               private spinner: NgxSpinnerService,) {
-    this.genres = [];
   }
 
   ngOnInit(): void {
@@ -28,9 +27,6 @@ export class NavbarRightComponent implements OnInit {
           if (value) {
             this.genres = value.map(genre => ({...genre, checked: false}));
           }
-        },
-        error: err => {
-          console.log("NavbarRightComponent ngOnInit: " + err);
         }
       }
     )
@@ -46,15 +42,14 @@ export class NavbarRightComponent implements OnInit {
     this.themoviedbService.searchParams.setGenres(this.selectedGenres);
     this.themoviedbService.sendSearchParam();
     const selectedGenresList = this.selectedGenres.map(genred => genred.name?.toLowerCase()).join(',');
-    this.router.navigate(['/movies/' + DiscoverType.GENRES], {queryParams: {list: selectedGenresList}});
+    this.router.navigate(['/movies/' + DiscoverTypeEnums.GENRES], {queryParams: {list: selectedGenresList}});
   }
 
-  routerlinkDiscover(POPULAR: DiscoverType) {
+  routerLinkDiscover(POPULAR: DiscoverTypeEnums): void {
     this.spinner.show();
     this.themoviedbService.searchParams.setType(POPULAR);
     this.genres.forEach(item => item.checked = false);
     this.themoviedbService.sendSearchParam();
-
     this.router.navigate(['/movies/' + POPULAR]);
   }
 }

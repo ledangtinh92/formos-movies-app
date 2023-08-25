@@ -10,16 +10,16 @@ import {MatDrawer} from "@angular/material/sidenav";
 export class AppComponent implements AfterViewInit {
   @ViewChild('drawer') drawer!: MatDrawer;
 
-  toggleDrawer() {
+  toggleDrawer(): void {
     this.drawer.toggle();
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  onResize(): void {
     this.setContainerBodyHeight();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setContainerBodyHeight();
   }
 

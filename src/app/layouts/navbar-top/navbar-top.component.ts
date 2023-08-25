@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ThemoviedbService} from "src/app/service/themoviedb-service";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -13,13 +13,15 @@ import {SearchModel} from "../../model/search.model";
   styleUrls: ['navbar-top.component.scss'],
 })
 export class NavbarTopComponent implements OnInit {
-  searchQuery: string;
-  searchQueryOld: string;
-  isSearchExpanded: boolean = false;
-  iconText = 'menu';
   @Output() menuToggleDrawer = new EventEmitter<string>();
+  @ViewChild('inputSearch', { static: false }) inputSearchElement?: ElementRef;
+  searchQuery = '';
+  searchQueryOld = '';
+  isSearchExpanded = false;
+  iconText = 'menu';
+
   themeSelect!: boolean;
-  searchPamra!: SearchModel;
+  searchParam!: SearchModel;
 
   constructor(
     private router: Router,
@@ -27,9 +29,8 @@ export class NavbarTopComponent implements OnInit {
     private themoviedbService: ThemoviedbService,
     private spinner: NgxSpinnerService,
     private storage: LocalStorageService,
+    private renderer: Renderer2
   ) {
-    this.searchQuery = '';
-    this.searchQueryOld = '';
   }
 
   toggleDrawer(): void {
@@ -46,7 +47,7 @@ export class NavbarTopComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchPamra = this.themoviedbService.searchParams;
+    this.searchParam = this.themoviedbService.searchParams;
     this.themoviedbService.getSearchParamData().subscribe(value => {
       this.searchQuery = value.search;
       if (this.searchQuery.trim() == '') {
@@ -97,5 +98,10 @@ export class NavbarTopComponent implements OnInit {
     this.themoviedbService.searchParams.clear();
     this.themoviedbService.sendSearchParam();
     this.router.navigate(['/']);
+  }
+
+  resetSearchValue(): void {
+    this.searchQuery = '';
+    this.renderer.selectRootElement(this.inputSearchElement?.nativeElement).focus();
   }
 }

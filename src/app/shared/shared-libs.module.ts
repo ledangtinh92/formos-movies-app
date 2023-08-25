@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 import {RoundNumberPipe} from "./pipe/round-number-pipe";
-import {ImageUrlPipe} from "./pipe/imag-url-pipe";
+import {ImageUrlPipe} from "./pipe/image-url-pipe";
 
 @NgModule({
-  declarations:[RoundNumberPipe,ImageUrlPipe],
+  declarations: [RoundNumberPipe, ImageUrlPipe],
   imports: [],
   exports: [
     FormsModule,
     CommonModule,
-    RoundNumberPipe,ImageUrlPipe,
+    RoundNumberPipe,
+    ImageUrlPipe,
   ],
 })
 export class SharedLibsModule {

@@ -4,7 +4,7 @@ import { ErrorComponent } from './error.component';
 
 export const errorRoute: Routes = [
   {
-    path: 'error/:error',
+    path: '404/:error',
     component: ErrorComponent,
     data: {
       errorTitle: 'Page not found',

@@ -1,7 +1,7 @@
 <div class="container-fluid container-body theme-main-color">
   <div class="row justify-content-center" *ngIf="this.personInfo">
     <div class="col-3">
-      <img class="float-end" *ngIf="this.personInfo.profile_path" [src]="this.personInfo.profile_path | imageUrl:ProfileSizesEnums.H632">
+      <img class="float-end" *ngIf="this.personInfo.profile_path" alt="{{this.personInfo.name}}" [src]="this.personInfo.profile_path | imageUrl:ProfileSizesEnums.H632">
     </div>
     <div class="col-4">
       <div class="row actor-detail-title">

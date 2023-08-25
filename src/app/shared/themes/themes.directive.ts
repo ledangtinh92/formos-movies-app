@@ -1,5 +1,4 @@
-import { Directive, OnInit, OnDestroy, ElementRef } from '@angular/core';
-
+import { Directive, OnInit, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Theme } from './symbols';
@@ -30,5 +29,4 @@ export class ThemeDirective implements OnInit {
       this._elementRef.nativeElement.style.setProperty(key, theme.properties[key]);
     }
   }
-
 }

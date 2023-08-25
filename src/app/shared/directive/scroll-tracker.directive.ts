@@ -9,12 +9,10 @@ export class ScrollTrackerDirective {
   constructor(private el: ElementRef) {}
 
   @HostListener('scroll', ['$event'])
-  onScroll(event: any) {
+  onScroll(event: any):void {
     const target = event.target;
     const scrollPosition = target.scrollHeight - target.clientHeight - target.scrollTop;
     const threshold = 100;
-
-    console.log(target);
     if (scrollPosition <= threshold) {
       this.scrolledToBottom.emit();
     }

@@ -1,9 +1,9 @@
-import {IGenres} from "./genre.model";
+import {IGenresModel} from "./genre.model";
 
 export class SearchModel {
   page: number;
   type: string;
-  genres: IGenres[];
+  genres: IGenresModel[];
   search: string;
   isLastPage: boolean;
 
@@ -27,7 +27,7 @@ export class SearchModel {
     this.isLastPage = false;
   }
 
-  setGenres(genres: IGenres[]): void {
+  setGenres(genres: IGenresModel[]): void {
     this.type = '';
     this.page = 0;
     this.genres = genres;

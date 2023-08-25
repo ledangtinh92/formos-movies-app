@@ -1,4 +1,3 @@
-<!--{{this.searchPamra | json}}-->
 <nav class="navbar navbar-expand-lg p-0 theme-main-color">
   <div class="d-inline-flex">
     <span class="material-icons" (click)="this.toggleDrawer()">{{iconText}}</span>
@@ -22,6 +21,7 @@
       <div class="search-bar">
         <div class="input-group input-group-sm" [ngClass]="{'expanded': isSearchExpanded}">
           <input
+            #inputSearch
             aria-describedby="basic-addon1"
             id = "search-input-id"
             name="searchQuery"
@@ -31,7 +31,7 @@
             (keydown.enter)="doSearch()"
             placeholder="Search..."
           />
-          <span class="input-group-text" id="basic-addon1">x</span>
+          <span class="input-group-text" (click)="resetSearchValue()" for="search-input-id" id="basic-addon1"><span>X</span></span>
         </div>
         <button class="search-toggle" (click)="toggleSearch()">
           <span class="material-icons circle">search</span>

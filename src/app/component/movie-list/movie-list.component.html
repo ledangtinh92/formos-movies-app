@@ -1,6 +1,6 @@
 <div class="container-fluid container-body theme-main-color" appScrollTracker (scrolledToBottom)="loadMoreData()">
   <div class="row category-title mt-4 mb-1" *ngIf="this.typeLoad">
-    <span >{{this.typeLoad | uppercase}}</span>
+    <span>{{this.typeLoad | uppercase}}</span>
     <p>CATEGORY</p>
   </div>
   <div class="row category-title mt-4 mb-1" *ngIf="this.genres">
@@ -18,8 +18,9 @@
   <div class="row justify-content-md-center">
     <ng-container *ngFor="let item of this.moviesLst">
       <ng-container *ngIf="item.poster_path">
-        <div class="card p-0 item-movie theme-main-color" >
-          <img [routerLink]="['/movie',item.id,'detail']" src="{{this.imageUrl + item.poster_path}}" class="card-img-top"
+        <div class="card p-0 item-movie theme-main-color">
+          <img [routerLink]="['/movie',item.id,'detail']"
+               src="{{ item.poster_path | imageUrl:PosterSizesEnums.W500}}" class="card-img-top"
                alt="{{item.original_title}}">
           <div class="card-body text-center">
             <p class="card-text" [routerLink]="['/movie',item.id,'detail']"

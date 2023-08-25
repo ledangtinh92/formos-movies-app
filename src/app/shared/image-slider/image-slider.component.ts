@@ -1,6 +1,6 @@
-import {Component, HostListener, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ImageSliderModel} from "./image-slider.model";
-import {interval, Subject, throttleTime} from "rxjs";
+import {interval, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 
 @Component({
@@ -44,20 +44,6 @@ export class ImageSliderComponent {
   }
 
   scrollNextItems():void {
-    if (this.isShowButton) {
-      let container = document.getElementById("containerItems");
-      container!.scrollLeft += this.scrollWidth;
-    }
-  }
-
-  previousItems():void {
-    if (this.isShowButton) {
-      let container = document.getElementById("containerItems");
-      container!.scrollLeft -= this.scrollWidth;
-    }
-  }
-
-  nextItems():void {
     if (this.isShowButton) {
       let container = document.getElementById("containerItems");
       container!.scrollLeft += this.scrollWidth;

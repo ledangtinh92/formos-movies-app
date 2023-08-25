@@ -1,4 +1,4 @@
-export interface IPage {
+export interface IPageModel {
   page: number;
   results?: Object[] | null;
   total_pages: number;

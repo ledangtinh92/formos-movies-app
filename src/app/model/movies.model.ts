@@ -1,6 +1,6 @@
-import {IGenres} from "./genre.model";
+import {IGenresModel} from "./genre.model";
 
-export interface IMovie {
+export interface IMovieModel {
   adult: boolean;
   backdrop_path?: string | null;
   genre_ids: string[] | null;
@@ -17,12 +17,12 @@ export interface IMovie {
   vote_count: number;
 }
 
-export interface IMovieDetail {
+export interface IMovieDetailModel {
   adult: boolean | null;
   backdrop_path?: string | null;
   belongs_to_collection: Object[] | null;
   budget: number | null;
-  genres: IGenres[] | null ;
+  genres: IGenresModel[] | null ;
   homepage: string | null;
   id: number | null;
   imdb_id: string | null;

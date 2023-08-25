@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {navbarTopRoute} from "./layouts/navbar-top/navbar-top.route";
 import {navbarRightRoute} from "./layouts/navbar-right/navbar-right.route";
 import {HomeComponent} from "./component/home/home.component";
@@ -26,11 +26,12 @@ const routes: Routes = [
     path: 'actor/:id/detail',
     loadChildren: () => import('./component/actor-detail/actor-detail.module').then(m => m.ActorDetailModule),
   },
-  navbarTopRoute,navbarRightRoute,...errorRoute
+  navbarTopRoute, navbarRightRoute, ...errorRoute
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

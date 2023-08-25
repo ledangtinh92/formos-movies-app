@@ -1,8 +1,8 @@
-<div class="container-fluid  theme-main-color" >
+<div class="container-fluid  theme-main-color">
   <div *ngIf="this.moviesDetail">
     <div class="row justify-content-center detail-body">
       <div class="col-3">
-        <img class="float-end" src="{{this.imageUrl + this.moviesDetail.poster_path}}"
+        <img class="float-end" *ngIf="this.moviesDetail.poster_path" [src]="this.moviesDetail.poster_path | imageUrl:PosterSizesEnums.W342"
              alt="{{this.moviesDetail.title}}">
       </div>
       <div class="col-4">
@@ -55,7 +55,8 @@
                 <div class="image-cast">
                   <img data-bs-toggle="tooltip" data-bs-placement="top" title="{{castItem.original_name}}"
                        [routerLink]="['/actor', castItem.id, 'detail']"
-                       src="{{ this.profileUrl + castItem.profile_path }}">
+                       alt="{{castItem.name}}"
+                       [src]="castItem.profile_path | imageUrl:ProfileSizesEnums.W45">
                 </div>
               </ng-container>
             </ng-container>
