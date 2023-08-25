@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ThemoviedbService} from "../../service/themoviedb-service";
 import {IMovieModel} from "../../model/movies.model";
 import {ApplicationConfigService} from "../../config/application-config.service";
@@ -23,6 +23,7 @@ export class MovieListComponent implements OnInit, OnDestroy {
   genres = ''
   searchName = '';
   isLastPage: boolean = false;
+  isFirstLoadMoreData: boolean=false;
 
   constructor(private themoviedbService: ThemoviedbService,
               private applicationConfigService: ApplicationConfigService,
@@ -94,11 +95,23 @@ export class MovieListComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(): void {
+    if(this.isFirstLoadMoreData){
+      const pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
+      const max = document.documentElement.scrollHeight;
+      if (pos == max) {
+        this.loadMoreData();
+      }
+    }
+  }
+
   loadMoreData(): void {
     if (this.isLastPage) {
       return;
     }
     this.spinner.show();
+    this.isFirstLoadMoreData = true;
     this.themoviedbService.getMovieList()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
