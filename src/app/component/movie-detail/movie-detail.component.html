@@ -59,6 +59,14 @@
                        [src]="castItem.profile_path | imageUrl:ProfileSizesEnums.W45">
                 </div>
               </ng-container>
+              <ng-container *ngIf="!castItem.profile_path">
+                <div class="image-cast">
+                  <img data-bs-toggle="tooltip" data-bs-placement="top" title="{{castItem.original_name}}"
+                       [routerLink]="['/actor', castItem.id, 'detail']"
+                       alt="{{castItem.name}}" src="/content/images/no-image.jpg" width="45" height="45" >
+                </div>
+
+              </ng-container>
             </ng-container>
           </div>
           <div class="col-1 text-center"><span class="material-icons" (click)="nextCastItems()"> keyboard_double_arrow_right </span></div>
