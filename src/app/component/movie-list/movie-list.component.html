@@ -1,4 +1,4 @@
-<div class="container-fluid container-body theme-main-color" appScrollTracker (scrolledToBottom)="loadMoreData()">
+<div class="container-fluid container-body theme-main-color">
   <div class="row category-title mt-4 mb-1" *ngIf="this.typeLoad">
     <span>{{this.typeLoad | uppercase}}</span>
     <p>CATEGORY</p>
@@ -15,15 +15,18 @@
     </div>
   </div>
 
-  <div class="row justify-content-md-center">
+  <div class="row justify-content-md-center item-images">
     <ng-container *ngFor="let item of this.moviesLst">
       <ng-container *ngIf="item.poster_path">
         <div class="card p-0 item-movie theme-main-color">
-          <img [routerLink]="['/movie',item.id,'detail']"
-               src="{{ item.poster_path | imageUrl:PosterSizesEnums.W500}}" class="card-img-top"
-               alt="{{item.original_title}}">
+<!--          TODO: Please comment the source code for comparison between two cases: lazy loading and non-lazy loading.-->
+<!--          <img [routerLink]="['/movie',item.id,'detail']"-->
+<!--               src="{{ item.poster_path | imageUrl:PosterSizesEnums.W500}}" class="card-img-top"-->
+<!--               alt="{{item.original_title}}">-->
+          <img [routerLink]="['/movie',item.id,'detail']" alt="{{item.original_title}}" class="card-img-top"
+               [ngSrc]="PosterSizesEnums.W500 + item.poster_path"  width="302" height="453">
           <div class="card-body text-center">
-            <p class="card-text" [routerLink]="['/movie',item.id,'detail']"
+            <p class="card-text title" [routerLink]="['/movie',item.id,'detail']"
                style="color: #555555">{{item.title | uppercase }}</p>
             <p class="card-text star">
               <ngb-rating [rate]="item.vote_average / 2">

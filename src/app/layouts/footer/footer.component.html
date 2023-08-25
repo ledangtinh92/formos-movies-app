@@ -3,9 +3,11 @@
     <div class="col">
       <img src="content/images/logo.png" class="image-logo-footer"  alt="Formos Movies"/>
     </div>
-    <div class="col align-self-end">
-      <div class="title ">Contact Us:
+    <div class="col align-self-center">
+      <div class="row align-items-end">
+        <div class="col-11 title">Contact Us:
           <a href="mailto:formos.movies@movies.formos.com"><span>formos.movies@movies.formos.com</span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -16,6 +18,9 @@
     <p>Formos Movies - Discover, Watch, Enjoy!</p>
   </div>
   <div class="col copyright">
+    <button *ngIf="isHiddenScrollTopBtn" class="btn btn-outline-primary scroll-to-top" (click)="scrollToTop()">
+      <span class='bi bi-chevron-double-up'></span>
+    </button>
     <span>Copyright © {{ currentYear }} <span class="name">Formos Movies</span> Inc.</span>
   </div>
 

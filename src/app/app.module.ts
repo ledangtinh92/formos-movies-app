@@ -19,7 +19,6 @@ import {environment} from "./environment/environment";
 import {httpInterceptorProviders} from "./core/interceptor";
 import {HttpClientModule} from "@angular/common/http";
 import {NgbCarouselModule, NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {ScrollTrackerDirective} from "./shared/directive/scroll-tracker.directive";
 import {HomeComponent} from './component/home/home.component';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {MatDialogModule} from "@angular/material/dialog";
@@ -29,7 +28,7 @@ import {ImageSliderModule} from "./shared/image-slider/image-slider.module";
 
 @NgModule({
   declarations: [
-    AppComponent, FooterComponent, ErrorComponent, NavbarTopComponent, NavbarRightComponent, ScrollTrackerDirective, HomeComponent
+    AppComponent, FooterComponent, ErrorComponent, NavbarTopComponent, NavbarRightComponent, HomeComponent
   ],
   imports: [
     HttpClientModule,

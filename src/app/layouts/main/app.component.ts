@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, HostListener, ViewChild} from '@angular/core';
 import {MatDrawer} from "@angular/material/sidenav";
+import {ViewportScroller} from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,9 @@ import {MatDrawer} from "@angular/material/sidenav";
 
 export class AppComponent implements AfterViewInit {
   @ViewChild('drawer') drawer!: MatDrawer;
+  isHiddenScrollTopBtn: boolean = false;
+  constructor(private viewportScroller: ViewportScroller) {
+  }
 
   toggleDrawer(): void {
     this.drawer.toggle();
@@ -19,8 +23,23 @@ export class AppComponent implements AfterViewInit {
     this.setContainerBodyHeight();
   }
 
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll(): void {
+    let pos = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
+    let max = document.documentElement.scrollHeight;
+    if (pos >= (max - (max/4))) {
+       this.isHiddenScrollTopBtn = true;
+    } else {
+      this.isHiddenScrollTopBtn = false;
+    }
+  }
+
   ngAfterViewInit(): void {
     this.setContainerBodyHeight();
+  }
+
+  scrollToTop(): void {
+    this.viewportScroller.scrollToAnchor("top-position");
   }
 
   private setContainerBodyHeight(): void {

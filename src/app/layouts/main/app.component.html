@@ -1,4 +1,4 @@
-<div app-theme class="container-main">
+<div app-theme class="container-main" id="top-position">
   <div class="container-fluid">
     <div class="row">
       <div class="col p-0">
@@ -14,7 +14,7 @@
               <router-outlet class="container-body"></router-outlet>
             </div>
             <div class="container-fluid" id="container-footer">
-              <app-footer></app-footer>
+              <app-footer [isHiddenScrollTopBtn]="isHiddenScrollTopBtn" (scrollTopEvent)="this.scrollToTop()"></app-footer>
             </div>
           </mat-drawer-content>
         </mat-drawer-container>
