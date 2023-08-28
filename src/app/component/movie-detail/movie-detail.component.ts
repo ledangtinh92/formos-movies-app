@@ -1,16 +1,16 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IMovieModel, IMovieDetailModel} from "../../model/movies.model";
-import {ApplicationConfigService} from "../../config/application-config.service";
+import {ThemoviedbService} from "@service/themoviedb-service";
+import {IMovieModel, IMovieDetailModel} from "@model/movies.model";
+import {ApplicationConfigService} from "@config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {first, Subject} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {ICastModel} from "../../model/cast.model";
-import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.quality.enums";
-import {IVideoModel} from "src/app/model/video.model";
+import {ICastModel} from "@app/model/cast.model";
+import {PosterSizesEnums, ProfileSizesEnums} from "@enums/image.quality.enums";
+import {IVideoModel} from "@model/video.model";
 import {MatDialog} from "@angular/material/dialog";
-import {YoutubeDialogComponent} from "src/app/shared/youtube-dialog/youtube-dialog.component";
-import {ImageSliderModel} from "../../shared/image-slider/image-slider.model";
+import {YoutubeDialogComponent} from "@shared/youtube-dialog/youtube-dialog.component";
+import {ImageSliderModel} from "@shared/image-slider/image-slider.model";
 import {takeUntil} from "rxjs/operators";
 
 @Component({

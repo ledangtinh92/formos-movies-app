@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApplicationConfigService} from "src/app/config/application-config.service";
-import {ThemoviedbService} from "src/app/service/themoviedb-service";
-import {IMovieModel} from "src/app/model/movies.model";
-import {BackdropSizesEnums, ProfileSizesEnums} from "../../enums/image.quality.enums";
+import {ApplicationConfigService} from "@config/application-config.service";
+import {ThemoviedbService} from "@service/themoviedb-service";
+import {IMovieModel} from "@model/movies.model";
+import {BackdropSizesEnums, ProfileSizesEnums} from "@enums/image.quality.enums";
 import {NgbCarouselConfig,} from "@ng-bootstrap/ng-bootstrap";
-import {IPersonModel} from "../../model/person.model";
-import {ImageSliderModel} from "../../shared/image-slider/image-slider.model";
+import {IPersonModel} from "@model/person.model";
+import {ImageSliderModel} from "@shared/image-slider/image-slider.model";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 

@@ -1,12 +1,12 @@
 import {Component, OnInit,OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {IMovieModel} from "../../model/movies.model";
-import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IPersonModel} from "../../model/person.model";
-import {ApplicationConfigService} from "../../config/application-config.service";
-import {PosterSizesEnums, ProfileSizesEnums} from "../../enums/image.quality.enums";
-import {SortTypeEnums} from "../../enums/sort.type.enums";
-import {ImageSliderModel} from "../../shared/image-slider/image-slider.model";
+import {IMovieModel} from "@app/model/movies.model";
+import {ThemoviedbService} from "@app/service/themoviedb-service";
+import {IPersonModel} from "@app/model/person.model";
+import {ApplicationConfigService} from "@app/config/application-config.service";
+import {PosterSizesEnums, ProfileSizesEnums} from "@app/enums/image.quality.enums";
+import {SortTypeEnums} from "@app/enums/sort.type.enums";
+import {ImageSliderModel} from "@app/shared/image-slider/image-slider.model";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 

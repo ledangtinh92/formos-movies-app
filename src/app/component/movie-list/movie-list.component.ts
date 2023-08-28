@@ -1,12 +1,12 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IMovieModel} from "../../model/movies.model";
-import {ApplicationConfigService} from "../../config/application-config.service";
+import {ThemoviedbService} from "@app/service/themoviedb-service";
+import {IMovieModel} from "@app/model/movies.model";
+import {ApplicationConfigService} from "@app/config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
-import {PosterSizesEnums} from "../../enums/image.quality.enums";
-import {DiscoverTypeEnums} from "../../enums/discover.type.enums";
+import {PosterSizesEnums} from "@app/enums/image.quality.enums";
+import {DiscoverTypeEnums} from "@app/enums/discover.type.enums";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 

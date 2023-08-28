@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {finalize, map, Observable, Subject} from 'rxjs';
-import {ApplicationConfigService} from "../config/application-config.service";
-import {IGenresModel} from "../model/genre.model";
-import {IPageModel} from "../model/page.model";
-import {IMovieModel, IMovieDetailModel} from "../model/movies.model";
-import {SearchModel} from "../model/search.model";
-import {DiscoverTypeEnums} from "../enums/discover.type.enums";
-import {DateService} from "../core/util/date-util.service";
-import {ICastModel} from "../model/cast.model";
-import {IPersonModel} from "../model/person.model";
-import {IVideoModel} from "src/app/model/video.model";
+import {ApplicationConfigService} from "@config/application-config.service";
+import {IGenresModel} from "@model/genre.model";
+import {IPageModel} from "@model/page.model";
+import {IMovieModel, IMovieDetailModel} from "@model/movies.model";
+import {SearchModel} from "@model/search.model";
+import {DiscoverTypeEnums} from "@enums/discover.type.enums";
+import {DateService} from "@core/util/date-util.service";
+import {ICastModel} from "@model/cast.model";
+import {IPersonModel} from "@model/person.model";
+import {IVideoModel} from "@app/model/video.model";
 import {NgxSpinnerService} from "ngx-spinner";
 
 @Injectable({providedIn: 'root'})

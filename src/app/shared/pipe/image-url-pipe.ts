@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ApplicationConfigService} from "../../config/application-config.service";
+import {ApplicationConfigService} from "@config/application-config.service";
 
 @Pipe({
   name: 'imageUrl'

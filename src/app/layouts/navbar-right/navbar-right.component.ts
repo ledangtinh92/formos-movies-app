@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemoviedbService} from "../../service/themoviedb-service";
-import {IGenresModel} from "../../model/genre.model";
-import {DiscoverTypeEnums} from "../../enums/discover.type.enums";
+import {ThemoviedbService} from "@app/service/themoviedb-service";
+import {IGenresModel} from "@app/model/genre.model";
+import {DiscoverTypeEnums} from "@app/enums/discover.type.enums";
 import {Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
 

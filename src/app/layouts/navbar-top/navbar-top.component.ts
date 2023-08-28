@@ -1,11 +1,11 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {ThemoviedbService} from "src/app/service/themoviedb-service";
+import {ThemoviedbService} from "@service/themoviedb-service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {LocalStorageService} from "ngx-webstorage";
-import {ThemeService} from "../../shared/themes/themes.service";
-import {THEMES_ACTIVE, THEMES_DARK, THEMES_LIGHT} from "../../constant/storage.constant";
-import {SearchModel} from "../../model/search.model";
+import {ThemeService} from "@shared/themes/themes.service";
+import {THEMES_ACTIVE, THEMES_DARK, THEMES_LIGHT} from "@constant/storage.constant";
+import {SearchModel} from "@model/search.model";
 
 @Component({
   selector: 'app-navbar-top',

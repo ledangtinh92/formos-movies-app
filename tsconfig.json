@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -26,18 +26,18 @@
     "paths": {
       "@app/*": ["app/*"],
       "@component/*": ["app/component/*"],
-      "@service/*": ["app/service/*"],
-      "@model/*": ["app/model/*"],
+      "@config/*": ["app/config/*"],
       "@constant/*": ["app/constant/*"],
-      "@util/*": ["app/util/*"],
+      "@core/*": ["app/core/*"],
+      "@enums/*": ["app/enums/*"],
+      "@layouts/*": ["app/layouts/*"],
+      "@model/*": ["app/model/*"],
+      "@service/*": ["app/service/*"],
       "@shared/*": ["app/shared/*"],
+      "@util/*": ["app/util/*"],
+      "@content/*": ["app/content/*"]
     }
   },
-//  "include": [
-//    "src/**/*.ts",
-//    "src/polyfills.ts",
-//  ],
-  "exclude": ["node_modules"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
