@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ThemoviedbService} from "@service/themoviedb-service";
 import {IMovieModel, IMovieDetailModel} from "@model/movies.model";
-import {ApplicationConfigService} from "@config/application-config.service";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
 import {first, Subject} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -9,9 +8,9 @@ import {ICastModel} from "@app/model/cast.model";
 import {PosterSizesEnums, ProfileSizesEnums} from "@enums/image.quality.enums";
 import {IVideoModel} from "@model/video.model";
 import {MatDialog} from "@angular/material/dialog";
-import {YoutubeDialogComponent} from "@shared/youtube-dialog/youtube-dialog.component";
 import {ImageSliderModel} from "@shared/image-slider/image-slider.model";
 import {takeUntil} from "rxjs/operators";
+import {YoutubeDialogComponent} from "@shared/youtube-dialog/youtube-dialog.component";
 
 @Component({
   selector: 'app-movie-detail',
@@ -29,7 +28,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   recommendationImageLst: ImageSliderModel[] = [];
 
   constructor(private themoviedbService: ThemoviedbService,
-              private applicationConfigService: ApplicationConfigService,
               private config: NgbRatingConfig,
               private router: Router,
               private dialog: MatDialog,
