@@ -7,14 +7,32 @@
   </a>
   <div class="d-flex align-items-center">
     <span class='material-icons icon-home' (click)="clickHomeMenu()">home</span>
+
   </div>
+
   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="material-icons theme-main-color">menu</span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class='fa fa-gamepad icon-home'></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" routerLink="/games/alphabet">
+            <fa-icon icon="keyboard"></fa-icon>
+            alphabet-game
+          </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">
+            <fa-icon icon="ship"></fa-icon>
+            battleship-Game</a></li>
+        </ul>
       </li>
     </ul>
     <div class="d-flex align-items-center pe-3">
@@ -23,7 +41,7 @@
           <input
             #inputSearch
             aria-describedby="basic-addon1"
-            id = "search-input-id"
+            id="search-input-id"
             name="searchQuery"
             class="search-input form-control"
             [(ngModel)]="this.searchQuery"
@@ -37,9 +55,9 @@
           <span class="material-icons circle">search</span>
         </button>
       </div>
-      <span  class="material-icons yellow-color icon-size">light_mode</span>&nbsp;
+      <span class="material-icons yellow-color icon-size">light_mode</span>&nbsp;
       <div class="form-check form-switch custom-switch">
-        <input class="form-check-input custom-control-input" [(ngModel)] = "themeSelect" (click)="toggle()" type="checkbox"
+        <input class="form-check-input custom-control-input" [(ngModel)]="themeSelect" (click)="toggle()" type="checkbox"
                id="flexSwitchCheckDisabled">
       </div>
       <span class="bi bi-moon"></span>

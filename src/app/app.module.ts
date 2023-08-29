@@ -25,6 +25,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {NgxWebstorageModule} from "ngx-webstorage";
 import {ErrorComponent} from "@layouts/error/error.component";
 import {ImageSliderModule} from "@shared/image-slider/image-slider.module";
+import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {fontAwesomeIcons} from "@config/font-awesome-icons";
 
 @NgModule({
   declarations: [
@@ -45,13 +47,15 @@ import {ImageSliderModule} from "@shared/image-slider/image-slider.module";
     NgbModule,
     NgxSpinnerModule,
     MatDialogModule,
-    ImageSliderModule
+    ImageSliderModule,
+    FontAwesomeModule
   ],
   providers: [ThemeService, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(applicationConfigService: ApplicationConfigService) {
+  constructor(applicationConfigService: ApplicationConfigService, iconLibrary: FaIconLibrary) {
+    iconLibrary.addIcons(...fontAwesomeIcons);
     applicationConfigService.setEndpointApi(environment.SERVER_API_URL);
     applicationConfigService.setEndpointImage(environment.SERVER_IMAGES_URL);
   }

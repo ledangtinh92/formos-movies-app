@@ -1,5 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApplicationConfigService} from "@config/application-config.service";
 import {ThemoviedbService} from "@service/themoviedb-service";
 import {IMovieModel} from "@model/movies.model";
 import {BackdropSizesEnums, ProfileSizesEnums} from "@enums/image.quality.enums";
@@ -21,8 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   nowPlayingMovies: IMovieModel[] = [];
   popularPeopleImages!: ImageSliderModel[];
 
-  constructor(private applicationConfigService: ApplicationConfigService,
-              config: NgbCarouselConfig,
+  constructor(config: NgbCarouselConfig,
               private themoviedbService: ThemoviedbService) {
     config.interval = 2000;
     config.keyboard = true;

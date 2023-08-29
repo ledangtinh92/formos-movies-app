@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {IMovieModel} from "@app/model/movies.model";
 import {ThemoviedbService} from "@app/service/themoviedb-service";
 import {IPersonModel} from "@app/model/person.model";
-import {ApplicationConfigService} from "@app/config/application-config.service";
 import {PosterSizesEnums, ProfileSizesEnums} from "@app/enums/image.quality.enums";
 import {SortTypeEnums} from "@app/enums/sort.type.enums";
 import {ImageSliderModel} from "@app/shared/image-slider/image-slider.model";
@@ -29,7 +28,6 @@ export class ActorDetailComponent implements OnInit, OnDestroy {
 
   constructor(private activeRoute: ActivatedRoute,
               private router: Router,
-              private applicationConfigService: ApplicationConfigService,
               private themoviedbService: ThemoviedbService) {}
 
   ngOnInit(): void {

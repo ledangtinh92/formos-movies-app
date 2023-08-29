@@ -118,12 +118,12 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
   }
 
   previousCastItems(): void {
-    let container = document.getElementById("castItemsContainer");
+    const container = document.getElementById("castItemsContainer");
     container!.scrollLeft -= 50;
   }
 
   nextCastItems(): void {
-    let container = document.getElementById("castItemsContainer");
+    const container = document.getElementById("castItemsContainer");
     container!.scrollLeft += 50;
   }
 }

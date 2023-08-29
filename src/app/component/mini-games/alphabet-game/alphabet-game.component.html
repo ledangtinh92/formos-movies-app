@@ -1,0 +1,51 @@
+
+<div class="d-flex  justify-content-center">
+  <div class="flex-column">
+
+  </div>
+</div>
+<br>
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-6 align-content-center container-body">
+      <div class="d-flex justify-content-center">
+        <h1>Alphabet-game</h1>
+      </div>
+      <div>
+        <h1> Charater({{this.totalTimes}}): {{this.keyGenAutoString}}</h1>
+      </div>
+      <div>
+        <h1> Character created: {{this.keyGenAutolst.toString()}}</h1>
+      </div>
+      <div>
+        <h1> Matching keys: {{this.keyMappinglst}}</h1>
+      </div>
+      <div>
+        <h1>Scores: {{this.scores}}</h1>
+      </div>
+      <div>
+        <mat-slider
+          class="example-margin"
+          [disabled]="true"
+          [max]="5"
+          [min]="0"
+          [step]="1">
+          <input matSliderThumb [(ngModel)]="this.keyPressError">
+        </mat-slider>
+        <span>GAME OVER!!!</span>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-6 align-content-center ">
+          <div class="row">
+            <div class="col-2">
+              <button class="btn btn-outline-primary" (click)="startGames()">start</button>
+            </div>
+            <div class="col-2">
+              <button class="btn btn-outline-primary" (click)="stopGames()">stop</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

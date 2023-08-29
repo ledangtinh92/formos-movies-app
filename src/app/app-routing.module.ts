@@ -9,6 +9,9 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },{
+    path: 'games',
+    loadChildren: () => import('@component/mini-games/mini-games.module').then(m => m.MiniGamesModule),
   },
   {
     path: 'movies/:type',
