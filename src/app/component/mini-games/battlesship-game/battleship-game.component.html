@@ -1,4 +1,79 @@
-<div id="computer_score"></div>
-<div id="player_board"></div>
-<div id="player_score"></div>
-<div id="computer_board"></div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1>
+        <span *ngIf="this.shipYouRecords != 0">Setting ship: {{this.shipYouRecords}}</span> {{(turnObservable | async)}}
+        <span *ngIf="this.shipYouRecords == 0">You: record - {{this.youRecords}}</span>
+      </h1>
+    </div>
+    <div class="col text-center">
+      <h1>
+        <span *ngIf="this.shipComputerRecords != 0">Setting ship: {{this.shipComputerRecords}}</span>
+        <span *ngIf="this.shipComputerRecords == 0"> Computer: record - {{this.computerRecords}}</span>
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col container-board text-center" [ngClass]="shipYouRecords == 0  ?'board-deactivate':''">
+      <div class="row" *ngFor="let row of playersYouBoards;index as colIndex">
+        <div class="col" *ngFor="let cell of row;index as rowIndex"
+             [attr.col-data]='colIndex'
+             [attr.row-data]='rowIndex'
+             (click)="playersBoardsClick($event)"
+        >
+          <ng-container [ngSwitch]="cell">
+            <ng-container *ngSwitchCase="99">
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                >X</span>
+            </ng-container>
+            <ng-container *ngSwitchCase="98">
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                >O</span>
+            </ng-container>
+            <ng-container *ngSwitchCase="0">
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                ></span>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                >{{cell}}</span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col container-board text-center" [ngClass]="!youTurn || (shipYouRecords != 0 && shipComputerRecords == 0) ?'board-deactivate':''">
+      <div class="row" *ngFor="let row of playersComputerBoards;index as colIndex">
+        <div class="col" *ngFor="let cell of row;index as rowIndex"
+             [attr.col-data]='colIndex'
+             [attr.row-data]='rowIndex'
+             (click)="playersBoardsClick($event)"
+        >
+          <ng-container [ngSwitch]="cell">
+            <ng-container *ngSwitchCase="99">
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                >X</span>
+            </ng-container>
+            <ng-container *ngSwitchCase="98">
+                <span class="ship-{{cell}}"
+                      [attr.col-data]='colIndex'
+                      [attr.row-data]='rowIndex'
+                >O</span>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
