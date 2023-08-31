@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {BattleshipGameService} from "@component/mini-games/battlesship-game/battleship-game.service";
-import {BehaviorSubject, debounceTime, Observable, Subject} from "rxjs";
+import {BehaviorSubject, combineLatest, debounceTime, Observable, scan, Subject} from "rxjs";
+import {combineLatestInit} from "rxjs/internal/observable/combineLatest";
 
 @Component({
   selector: 'app-battleship-game',
@@ -18,8 +19,8 @@ export class BattleShipGameComponent implements OnInit, AfterViewInit {
   turnObservable: Subject<boolean>;
 
 
-  computerShipNumberOb: BehaviorSubject<number> = new BehaviorSubject<number>(50);
-  playShipNumberOb: BehaviorSubject<number> = new BehaviorSubject<number>(50);
+  computerRecordOb: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  playRecordOb: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   turnOb: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
@@ -39,10 +40,21 @@ export class BattleShipGameComponent implements OnInit, AfterViewInit {
         this.computerPlay();
     })
 
-    
-
-
-
+    combineLatest([this.computerRecordOb, this.playRecordOb, this.turnOb])
+      .pipe(
+        scan((accumulator, [computerShipNumberOb, playShipNumberOb, turnOb]) => {
+            return {
+              computerShipNumberOb: accumulator.computerShipNumberOb + computerShipNumberOb,
+              playShipNumberOb: accumulator.playShipNumberOb + playShipNumberOb,
+              turnOb: turnOb
+            };
+          }, {computerShipNumberOb: 0, playShipNumberOb: 0, turnOb: false}
+        ))
+      .subscribe(value => {
+        alert(value.computerShipNumberOb)
+        alert(value.playShipNumberOb);
+        alert(value.turnOb);
+      });
   }
 
   ngAfterViewInit(): void {
@@ -61,13 +73,16 @@ export class BattleShipGameComponent implements OnInit, AfterViewInit {
         if (youRecordData != 0 && youRecordData < 90){
           this.playersYouBoards[Number(colData)][Number(rowData)] = 99;
           this.computerRecords = this.computerRecords + youRecordData;
+
           this.turnObservable.next(this.youTurn);
+          this.computerRecordOb.next(this.computerRecords);
         } else {
           if(youRecordData < 90){
             this.playersYouBoards[Number(colData)][Number(rowData)] = 98;
           }
         }
         this.youTurn = true;
+        this.turnOb.next(this.youTurn);
       }
     }
   }
@@ -87,11 +102,13 @@ export class BattleShipGameComponent implements OnInit, AfterViewInit {
             if (computerRecord != 0 && computerRecord < 90) {
               this.playersComputerBoards[Number(colData)][Number(rowData)] = 99;
               this.youRecords = this.youRecords + computerRecord;
+              this.playRecordOb.next(this.youRecords);
             } else {
               if(computerRecord < 90){
                 this.playersComputerBoards[Number(colData)][Number(rowData)] = 98;
                 this.youTurn = false;
                 this.turnObservable.next(this.youTurn);
+                this.turnOb.next(this.youTurn);
               }
             }
           }
