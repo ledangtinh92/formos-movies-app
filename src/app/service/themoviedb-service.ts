@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {finalize, map, Observable, Subject} from 'rxjs';
+import {finalize, map, Observable, startWith, Subject} from 'rxjs';
 import {ApplicationConfigService} from "@config/application-config.service";
 import {IGenresModel} from "@model/genre.model";
 import {IPageModel} from "@model/page.model";
@@ -72,7 +72,8 @@ export class ThemoviedbService {
       }
     }
 
-    return this.http.get<IPageModel>(`${this.resourceUrl}${url}`, {params: options, observe: 'response'}).pipe(
+    return this.http.get<IPageModel>(`${this.resourceUrl}${url}`, {params: options, observe: 'response'})
+      .pipe(
       map(response => {
         if (response.body !== null) {
           this.pageResult = response.body;

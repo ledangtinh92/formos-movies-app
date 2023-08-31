@@ -38,6 +38,7 @@ export class NavbarRightComponent implements OnInit {
   }
 
   onCheckboxChange(): void {
+    this.spinner.show();
     this.selectedGenres = this.genres.filter(genre => genre.checked);
     this.themoviedbService.searchParams.setGenres(this.selectedGenres);
     this.themoviedbService.sendSearchParam();

@@ -7,7 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NgxSpinnerService} from "ngx-spinner";
 import {PosterSizesEnums} from "@app/enums/image.quality.enums";
 import {DiscoverTypeEnums} from "@app/enums/discover.type.enums";
-import {Subject} from "rxjs";
+import {merge, startWith, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 
 @Component({
@@ -37,30 +37,33 @@ export class MovieListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activeRoute.queryParams
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.themoviedbService.searchParams.page = 0;
-        this.themoviedbService.getMovieList()
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe({
-            next: result => {
-              if (result) {
-                this.themoviedbService.sendMoviesData(result.results)
-              }
-            }
-          });
-      });
-    this.activeRoute.params
+    merge(this.activeRoute.queryParams, this.activeRoute.params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(params => {
-        const typeSearch = params['type'];
-        switch (typeSearch) {
-          case DiscoverTypeEnums.POPULAR:
-          case DiscoverTypeEnums.UPCOMING:
-          case DiscoverTypeEnums.TOP_RATED:
-          case DiscoverTypeEnums.GENRES:
-          case DiscoverTypeEnums.SEARCH:
+          const typeSearch = params['type'];
+          if (typeSearch) {
+            switch (typeSearch) {
+              case DiscoverTypeEnums.POPULAR:
+              case DiscoverTypeEnums.UPCOMING:
+              case DiscoverTypeEnums.TOP_RATED:
+              case DiscoverTypeEnums.GENRES:
+              case DiscoverTypeEnums.SEARCH:
+                this.themoviedbService.searchParams.page = 0;
+                this.themoviedbService.getMovieList()
+                  .pipe(takeUntil(this.unsubscribe$))
+                  .subscribe({
+                    next: result => {
+                      if (result) {
+                        this.themoviedbService.sendMoviesData(result.results)
+                      }
+                    }
+                  });
+                break;
+              default:
+                this.router.navigate(['404']);
+                break;
+            }
+          } else {
             this.themoviedbService.searchParams.page = 0;
             this.themoviedbService.getMovieList()
               .pipe(takeUntil(this.unsubscribe$))
@@ -71,12 +74,10 @@ export class MovieListComponent implements OnInit, OnDestroy {
                   }
                 }
               });
-            break;
-          default:
-            this.router.navigate(['404']);
-            break;
+          }
         }
-      });
+      );
+
     this.themoviedbService.getMoviesData()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(data => {
