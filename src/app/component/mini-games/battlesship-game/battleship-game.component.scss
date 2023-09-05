@@ -9,11 +9,7 @@
        height:50px;
      }
      & .col:hover{
-       border: #020202 1px solid;
-
-       //border-radius: 50%;
-       //transform: scale(1.3);
-       //transform-style: flat;
+       outline: #020202 1px solid;
      }
    }
 }

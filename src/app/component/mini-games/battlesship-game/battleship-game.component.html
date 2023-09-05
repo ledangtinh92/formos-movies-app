@@ -2,20 +2,20 @@
   <div class="row">
     <div class="col text-center">
       <h1>
-        <span *ngIf="this.shipYouRecords != 0">Setting ship: {{this.shipYouRecords}}</span> {{(turnObservable | async)}}
-        <span *ngIf="this.shipYouRecords == 0">You: record - {{this.youRecords}}</span>
+        <span *ngIf="this.playerPoints != 0">Setting ship: {{this.playerPoints}}</span>
+        <span *ngIf="this.playerPoints == 0">You: record - {{this.playerScores}}</span>
       </h1>
     </div>
     <div class="col text-center">
       <h1>
-        <span *ngIf="this.shipComputerRecords != 0">Setting ship: {{this.shipComputerRecords}}</span>
-        <span *ngIf="this.shipComputerRecords == 0"> Computer: record - {{this.computerRecords}}</span>
+        <span *ngIf="this.computerPoints != 0">Setting ship: {{this.computerPoints}}</span>
+        <span *ngIf="this.computerPoints == 0"> Computer: record - {{this.computerScores}}</span>
       </h1>
     </div>
   </div>
   <div class="row">
-    <div class="col container-board text-center" [ngClass]="shipYouRecords == 0  ?'board-deactivate':''">
-      <div class="row" *ngFor="let row of playersYouBoards;index as colIndex">
+    <div class="col container-board text-center" [ngClass]="playerPoints == 0  ?'board-deactivate':''">
+      <div class="row" *ngFor="let row of playerBoard;index as colIndex">
         <div class="col" *ngFor="let cell of row;index as rowIndex"
              [attr.col-data]='colIndex'
              [attr.row-data]='rowIndex'
@@ -50,8 +50,8 @@
         </div>
       </div>
     </div>
-    <div class="col container-board text-center" [ngClass]="!youTurn || (shipYouRecords != 0 && shipComputerRecords == 0) ?'board-deactivate':''">
-      <div class="row" *ngFor="let row of playersComputerBoards;index as colIndex">
+    <div class="col container-board text-center" [ngClass]="!playerTurn || (playerPoints != 0 && computerPoints == 0) ?'board-deactivate':''">
+      <div class="row" *ngFor="let row of ComputerBoard;index as colIndex">
         <div class="col" *ngFor="let cell of row;index as rowIndex"
              [attr.col-data]='colIndex'
              [attr.row-data]='rowIndex'
