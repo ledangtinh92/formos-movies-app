@@ -2,7 +2,7 @@
   <div class="d-inline-flex">
     <span class="material-icons" (click)="this.toggleDrawer()">{{iconText}}</span>
   </div>
-  <a class="navbar-brand" (click)="this.toggleDrawer()">
+  <a class="navbar-brand title-main" (click)="this.toggleDrawer()">
     Formos Movies
   </a>
   <div class="d-flex align-items-center">
@@ -39,6 +39,8 @@
       <div class="search-bar">
         <div class="input-group input-group-sm" [ngClass]="{'expanded': isSearchExpanded}">
           <input
+            [@fadeInOut]="isInputVisible ? 'in' : 'out'"
+            type="search"
             #inputSearch
             aria-describedby="basic-addon1"
             id="search-input-id"
@@ -49,9 +51,8 @@
             (keydown.enter)="doSearch()"
             placeholder="Search..."
           />
-          <span class="input-group-text" (click)="resetSearchValue()" for="search-input-id" id="basic-addon1"><span>X</span></span>
         </div>
-        <button class="search-toggle" (click)="toggleSearch()">
+        <button class="search-toggle" (click)="toggleInputVisibility()">
           <span class="material-icons circle">search</span>
         </button>
       </div>

@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, OnInit, Output, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {ThemoviedbService} from "@service/themoviedb-service";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -6,15 +6,17 @@ import {LocalStorageService} from "ngx-webstorage";
 import {ThemeService} from "@shared/themes/themes.service";
 import {THEMES_ACTIVE, THEMES_DARK, THEMES_LIGHT} from "@constant/storage.constant";
 import {SearchModel} from "@model/search.model";
+import {fadeAnimations} from "@shared/animations/fade-animations";
 
 @Component({
   selector: 'app-navbar-top',
   templateUrl: 'navbar-top.component.html',
   styleUrls: ['navbar-top.component.scss'],
+  animations: fadeAnimations,
 })
 export class NavbarTopComponent implements OnInit {
   @Output() menuToggleDrawer = new EventEmitter<string>();
-  @ViewChild('inputSearch', { static: false }) inputSearchElement?: ElementRef;
+  @ViewChild('inputSearch', {static: false}) inputSearchElement?: ElementRef;
   searchQuery = '';
   searchQueryOld = '';
   isSearchExpanded = false;
@@ -22,13 +24,14 @@ export class NavbarTopComponent implements OnInit {
   themeSelect!: boolean;
   searchParam!: SearchModel;
 
+  isInputVisible = false;
+
   constructor(
     private router: Router,
     private themeService: ThemeService,
     private themoviedbService: ThemoviedbService,
     private spinner: NgxSpinnerService,
     private storage: LocalStorageService,
-    private renderer: Renderer2
   ) {
   }
 
@@ -37,11 +40,19 @@ export class NavbarTopComponent implements OnInit {
     this.iconText = this.iconText === 'menu' ? 'keyboard_double_arrow_left' : 'menu';
   }
 
-  toggleSearch(): void {
+  toggleInputVisibility(): void {
     if (this.searchQuery != null && this.searchQuery.trim() !== '') {
-      this.doSearch();
+
     } else {
-      this.isSearchExpanded = !this.isSearchExpanded;
+      const inputItem = this.inputSearchElement?.nativeElement as HTMLInputElement;
+
+      this.isInputVisible = !this.isInputVisible;
+      if(this.isInputVisible){
+        //this.inputSearchElement?.nativeElement.focus();
+      } else {
+        //this.inputSearchElement?.nativeElement.blur();
+      }
+      console.log(this.isInputVisible)
     }
   }
 
@@ -80,6 +91,7 @@ export class NavbarTopComponent implements OnInit {
   onBlur(): void {
     if (this.searchQuery.trim() === '') {
       this.isSearchExpanded = false;
+      this.isInputVisible = false;
     }
   }
 
@@ -97,10 +109,5 @@ export class NavbarTopComponent implements OnInit {
     this.themoviedbService.searchParams.clear();
     this.themoviedbService.sendSearchParam();
     this.router.navigate(['/']);
-  }
-
-  resetSearchValue(): void {
-    this.searchQuery = '';
-    this.renderer.selectRootElement(this.inputSearchElement?.nativeElement).focus();
   }
 }

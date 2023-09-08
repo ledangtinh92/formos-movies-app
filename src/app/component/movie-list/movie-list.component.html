@@ -25,7 +25,10 @@
 <!--               alt="{{item.original_title}}">-->
           <img [routerLink]="['/movie',item.id,'detail']" alt="{{item.original_title}}" class="card-img-top"
                [ngSrc]="PosterSizesEnums.W500 + item.poster_path"  width="302" height="453">
-          <div class="card-body text-center">
+          <div class="card-body text-center card-img-overlay">
+            <div class="overlay">
+              <div class="text">{{item.popularity}}</div>
+            </div>
             <p class="card-text title" [routerLink]="['/movie',item.id,'detail']"
                style="color: #555555">{{item.title | uppercase }}</p>
             <p class="card-text star">

@@ -5,10 +5,26 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.title-main{
+  text-shadow: -1px 0px 2px #0e3b5f,1px 0px 2px #0e3b5f,0px 1px 2px #0e3b5f,0px -1px 2px #0e3b5f;
+}
+
+@keyframes icon-home-animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .icon-home{
   color: #1976d2;
   cursor: pointer;
+  animation-name: icon-home-animation;
+  animation-duration:4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear ;
 }
 
 .navbar-brand{
@@ -44,18 +60,21 @@
 }
 
 .search-bar .input-group {
-  display: none;
-  transition: width 0.3s;
+  //display: none;
+}
+
+.search-input{
+  //transition: width 0.5s ease-out;
+  //display: none;
+  //width: 20vw;
+  //min-width: 100px;
 }
 
 .search-bar .input-group.expanded {
-  display: flex;
+  //display: flex;
   & .search-input{
-    width: 300px;
-    border-right: none;
-  }
-  & .input-group-text:hover span{
-    transform: scale(1.3);
+    //display: flex;
+    //width: 300px;
   }
 }
 

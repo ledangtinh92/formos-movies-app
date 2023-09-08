@@ -2,7 +2,7 @@
   <div *ngIf="this.moviesDetail">
     <div class="row justify-content-center detail-body">
       <div class="col-3">
-        <img class="float-end" *ngIf="this.moviesDetail.poster_path" [src]="this.moviesDetail.poster_path | imageUrl:PosterSizesEnums.W342"
+        <img class="img-fluid float-end" *ngIf="this.moviesDetail.poster_path" [src]="this.moviesDetail.poster_path | imageUrl:PosterSizesEnums.W342"
              alt="{{this.moviesDetail.title}}">
       </div>
       <div class="col-4">
@@ -91,6 +91,7 @@
           <div class="col-3">
             <button class="btn btn btn-success d-flex align-items-center float-end" (click)="this.goBack()">
               <span class="material-icons">arrow_back</span>
+              <span class="spinner-border spinner-border-sm"></span>
               <span>Back</span>
             </button>
           </div>

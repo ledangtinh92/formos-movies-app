@@ -59,6 +59,8 @@
     & img{
       width: 45px;
       height: 45px;
+      object-fit:cover;
+      object-position: 80% 100%;
       overflow: hidden;
       border-radius: 50%;
       transition: transform 0.3s;

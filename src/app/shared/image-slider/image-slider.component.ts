@@ -21,10 +21,12 @@ export class ImageSliderComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
     this.renderer.listen('window', 'load', () => {
-      const scrollDiv: HTMLElement = this.scrollDivRef.nativeElement;
-      if (scrollDiv.scrollWidth <= scrollDiv.clientWidth) {
-        this.isShowButton = false;
-      }
+      setTimeout(():void => {
+        const scrollDiv: HTMLElement = this.scrollDivRef.nativeElement;
+        if (scrollDiv.scrollWidth <= scrollDiv.clientWidth) {
+          this.isShowButton = false;
+        }
+      }, 1000);
     });
   }
 
