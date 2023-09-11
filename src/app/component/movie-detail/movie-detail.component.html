@@ -1,28 +1,28 @@
 <div class="container-fluid  theme-main-color">
   <div *ngIf="this.moviesDetail">
     <div class="row justify-content-center detail-body">
-      <div class="col-3">
-        <img class="img-fluid float-end" *ngIf="this.moviesDetail.poster_path" [src]="this.moviesDetail.poster_path | imageUrl:PosterSizesEnums.W342"
+      <div class="col-12 col-md-3">
+        <img class="img-fluid image-poster" *ngIf="this.moviesDetail.poster_path" [src]="this.moviesDetail.poster_path | imageUrl:PosterSizesEnums.W342"
              alt="{{this.moviesDetail.title}}">
       </div>
-      <div class="col-4">
+      <div class="col-12 col-md-4">
         <div class="row movie-detail-title">
           <span> {{this.moviesDetail.title | uppercase }}</span>
           <p>{{this.moviesDetail.tagline | uppercase }}</p>
         </div>
         <div class="row justify-content-between">
-          <div class="col-4 star">
-            <ngb-rating [rate]="moviesDetail.vote_average/2">
-              <ng-template let-fill="fill" let-index="index">
-                <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
-              </ng-template>
-            </ngb-rating>
-            <span>{{this.moviesDetail.vote_average | roundNumber }}</span>
+          <div class="col-md-6 col-12 star">
+              <ngb-rating class="d-inline" [rate]="moviesDetail.vote_average/2">
+                <ng-template let-fill="fill" let-index="index">
+                  <i class="bi bi-star{{fill === 100 ? '-fill' : ''}}" [class.filled]="fill === 100"></i>
+                </ng-template>
+              </ngb-rating>
+              <span class="d-inline">{{this.moviesDetail.vote_average | roundNumber }}</span>
           </div>
-          <div class="col-4 movies-info">
-            <span>{{this.moviesDetail.original_language | uppercase }}</span>/
-            <span>{{this.moviesDetail.runtime }}</span><span class="ms-1">MIN.</span>
-            <span *ngIf="this.moviesDetail.release_date">/{{this.moviesDetail.release_date.substring(0, 4) }}</span>
+          <div class="col-md-6 col-12 movies-info">
+            <span class="d-inline">{{this.moviesDetail.original_language | uppercase }}</span>/
+            <span class="d-inline">{{this.moviesDetail.runtime }}</span><span class="ms-1">MIN.</span>
+            <span class="d-inline" *ngIf="this.moviesDetail.release_date">/{{this.moviesDetail.release_date.substring(0, 4) }}</span>
           </div>
         </div>
         <div class="row mt-3">
@@ -72,7 +72,7 @@
           <div class="col-1 text-center"><span class="material-icons" (click)="nextCastItems()"> keyboard_double_arrow_right </span></div>
         </div>
         <div class="row justify-content-between mt-3">
-          <div class="col-9">
+          <div class="col-12 col-md-9">
             <a *ngIf="this.moviesDetail.homepage" class="btn btn-outline-success d-inline-flex align-items-center me-3"
                href="{{this.moviesDetail.homepage}}" target="_blank">
               <span>Website</span>
@@ -88,10 +88,9 @@
               <span>Trailer</span>
             </button>
           </div>
-          <div class="col-3">
+          <div class="col-12 col-md-3 arrow-back">
             <button class="btn btn btn-success d-flex align-items-center float-end" (click)="this.goBack()">
               <span class="material-icons">arrow_back</span>
-              <span class="spinner-border spinner-border-sm"></span>
               <span>Back</span>
             </button>
           </div>
