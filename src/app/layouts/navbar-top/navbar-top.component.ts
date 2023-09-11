@@ -42,17 +42,16 @@ export class NavbarTopComponent implements OnInit {
 
   toggleInputVisibility(): void {
     if (this.searchQuery != null && this.searchQuery.trim() !== '') {
-
+        this.doSearch();
     } else {
-      const inputItem = this.inputSearchElement?.nativeElement as HTMLInputElement;
-
-      this.isInputVisible = !this.isInputVisible;
-      if(this.isInputVisible){
-        //this.inputSearchElement?.nativeElement.focus();
+      if (document.activeElement === this.inputSearchElement?.nativeElement) {
+          return;
       } else {
-        //this.inputSearchElement?.nativeElement.blur();
+        this.isInputVisible = !this.isInputVisible;
+        if (this.isInputVisible) {
+          this.inputSearchElement?.nativeElement.focus();
+        }
       }
-      console.log(this.isInputVisible)
     }
   }
 
@@ -90,7 +89,6 @@ export class NavbarTopComponent implements OnInit {
 
   onBlur(): void {
     if (this.searchQuery.trim() === '') {
-      this.isSearchExpanded = false;
       this.isInputVisible = false;
     }
   }
