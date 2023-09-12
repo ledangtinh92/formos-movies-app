@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {finalize, map, Observable, Subject} from 'rxjs';
+import {finalize, map, Observable, startWith, Subject} from 'rxjs';
 import {ApplicationConfigService} from "@config/application-config.service";
 import {IGenresModel} from "@model/genre.model";
 import {IPageModel} from "@model/page.model";
