@@ -67,7 +67,11 @@ export class NavbarTopComponent implements OnInit {
     const themeActive = this.storage.retrieve(THEMES_ACTIVE)
     if (themeActive) {
       this.themeService.setTheme(themeActive.name);
-      this.themeSelect = themeActive.name !== THEMES_LIGHT;
+      if (themeActive.name === THEMES_LIGHT) {
+        this.themeSelect = false;
+      } else {
+        this.themeSelect = true;
+      }
     } else {
       this.storage.store(THEMES_ACTIVE, this.themeService.getActiveTheme());
     }

@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ThemoviedbService} from "@service/themoviedb-service";
 import {IMovieModel, IMovieDetailModel} from "@model/movies.model";
 import {NgbRatingConfig} from "@ng-bootstrap/ng-bootstrap";
@@ -34,11 +34,6 @@ export class MovieDetailComponent implements OnInit, OnDestroy {
               private activeRoute: ActivatedRoute) {
     this.config.readonly = true;
     this.config.max = 5;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
-    const taget =  event.currentTarget as Window;
   }
 
   ngOnInit(): void {

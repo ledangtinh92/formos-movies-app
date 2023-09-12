@@ -18,15 +18,15 @@
   <div class="row justify-content-md-center item-images">
     <ng-container *ngFor="let item of this.moviesLst">
       <ng-container *ngIf="item.poster_path">
-        <div class="card p-0 item-movie theme-main-color" [routerLink]="['/movie',item.id,'detail']">
+        <div class="card p-0 item-movie theme-main-color">
 <!--          TODO: Please comment the source code for comparison between two cases: lazy loading and non-lazy loading.-->
 <!--          <img [routerLink]="['/movie',item.id,'detail']"-->
 <!--               src="{{ item.poster_path | imageUrl:PosterSizesEnums.W500}}" class="card-img-top"-->
 <!--               alt="{{item.original_title}}">-->
           <img [routerLink]="['/movie',item.id,'detail']" alt="{{item.original_title}}" class="card-img-top"
-               [ngSrc]="PosterSizesEnums.W342 + item.poster_path"  width="302" height="453">
+               [ngSrc]="PosterSizesEnums.W500 + item.poster_path"  width="302" height="453">
           <div class="card-body text-center card-img-overlay">
-            <div class="overlay" [routerLink]="['/movie',item.id,'detail']">
+            <div class="overlay">
               <div class="text">{{item.popularity}}</div>
             </div>
             <p class="card-text title" [routerLink]="['/movie',item.id,'detail']"
